@@ -10,3 +10,4 @@ class Event(models.Model):
     date_of_creation = models.DateTimeField('Date of creation')
     date_of_the_event = models.DateTimeField('Date of the event')
     creator = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    price = models.IntegerField(default=0)

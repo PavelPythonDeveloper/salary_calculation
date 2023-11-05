@@ -1,0 +1,10 @@
+{% extends 'events/base.html' %}
+
+{% block title %}Event list{% endblock %}
+
+{% block content %}
+    {% for event in events %}
+         <p2>{{ event.title }}</p2><br>
+        <p2>{{ event.date_of_the_event }}</p2><br>
+    {% endfor %}
+{% endblock %}

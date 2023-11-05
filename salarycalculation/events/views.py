@@ -7,3 +7,7 @@ def events_list(request):
     events = Event.objects.all()
     print(events)
     return render(request, 'events/event/list.html', {'events': events})
+
+
+def events_detail(request, id):
+    return HttpResponse(id, 'lalalalal')

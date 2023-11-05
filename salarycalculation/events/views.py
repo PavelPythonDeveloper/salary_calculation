@@ -10,4 +10,6 @@ def events_list(request):
 
 
 def events_detail(request, id):
-    return HttpResponse(id, 'lalalalal')
+    event = get_object_or_404(Event, id=id)
+    return render(request, 'events/event/detail.html', {'event': event})
+

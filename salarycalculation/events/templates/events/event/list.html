@@ -5,11 +5,14 @@
 {% block content %}
     {% for event in events %}
         <p2>
+            title:
             <a href="{% url 'events:events_detail' event.id %}">
                 {{ event.title }}
-            </a>
+            </a><br>
         </p2>
+        Date of the event:
         <p2>{{ event.date_of_the_event }}</p2><br>
+        Price:
         <p2>{{ event.price }}</p2><br>
         <hr>
     {% endfor %}

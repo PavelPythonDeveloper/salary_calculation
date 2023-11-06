@@ -3,6 +3,7 @@
 {% block title %}Event list{% endblock %}
 
 {% block content %}
+    {% if not events %}You have no event. Add one?{% endif %}
     {% for event in events %}
         <p2>
             title:

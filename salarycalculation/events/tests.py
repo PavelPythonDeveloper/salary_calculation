@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 def create_event(title, comment, date_of_the_event, price):
     creator = User()
     creator.save()
+    # print(creator)
     event = Event.objects.create(title=title,
                                  comment=comment,
                                  date_of_the_event=date_of_the_event,
@@ -37,3 +38,6 @@ class EventEventsDetailViewTest(TestCase):
                      )
         response = self.client.get(reverse('events:events_detail', kwargs={'id': 1}))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Testing')
+        self.assertContains(response, 'We test our code sometimes')
+        self.assertContains(response, '1000')

@@ -9,13 +9,9 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Создан аккаунт {username}!')
-            return redirect('events:events_list')
-        else:
-            form = UserRegisterForm()
-
+            new_user = form.save()
+            context = {'new_user': new_user}
+            return render(request, 'users/register_done.html', context=context)
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})

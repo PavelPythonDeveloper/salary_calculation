@@ -13,3 +13,5 @@ class UsersRegisterViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(User.objects.filter(username='Tester').exists())
+        self.assertTemplateUsed(response, 'users/register_done.html')
+        self.assertContains(response, 'You are successfully registered!!!')

@@ -1,9 +1,10 @@
 
-<form method="POST" novalidate>
+<form action="{% url 'users:login' %}" method="POST" novalidate>
 {% for field in form %}
     {% csrf_token %}
     {{ field.errors }}
     {{ field.label_tag }} {{ field }}<br>
 {% endfor %}
+     <input type="hidden" name="next" value="{% url 'events:events_list' request.user.id %}" />
     <button type="submit">log in</button>
 </form>

@@ -5,6 +5,7 @@
     {{ field.errors }}
     {{ field.label_tag }} {{ field }}<br>
 {% endfor %}
-     <input type="hidden" name="next" value="{% url 'events:events_list' request.user.id %}" />
+     <input type="hidden" name="next" value="{% url 'events:events_list' %}">
+
     <button type="submit">log in</button>
 </form>

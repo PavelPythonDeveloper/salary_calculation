@@ -32,13 +32,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
+    'events.apps.EventsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'events.apps.EventsConfig',
+
 
 ]
 
@@ -125,6 +126,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# LOGIN_REDIRECT_URL = 'list'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+# LOGIN_REDIRECT_URL = 'events:events_list/<user_id>'
+LOGIN_URL = 'users:login'
+LOGOUT_URL = 'users:logout'

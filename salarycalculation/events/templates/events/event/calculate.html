@@ -1,0 +1,13 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<form action="{% url 'events:calculate' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Calculate</button>
+</form>
+
+
+    <p>From {{ start }} to {{ end }} your earnings is {{ amount }}</p>
+
+{% endblock %}

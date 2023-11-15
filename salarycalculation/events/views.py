@@ -21,3 +21,16 @@ def events_detail(request, id):
     if event.creator == request.user:
         return render(request, 'events/event/detail.html', {'event': event})
     return HttpResponse("You can't view other people's events")
+
+
+@login_required
+def calculate(request, start, end):
+    events = Event.objects.filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
+    if events:
+        amount = 0
+        for event in events:
+            amount += event.price
+        return render(request, 'events/event/calculated.html', {'amount': amount,
+                                                                'start': start,
+                                                                'end': end})
+    return HttpResponse('You have no events in this period')

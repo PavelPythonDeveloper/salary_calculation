@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponse
 from .models import Event
 from django.contrib.auth.decorators import login_required
+from .forms import CalculateSumForm
 
 
 @login_required
@@ -24,13 +25,20 @@ def events_detail(request, id):
 
 
 @login_required
-def calculate(request, start, end):
-    events = Event.objects.filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
-    if events:
-        amount = 0
-        for event in events:
-            amount += event.price
-        return render(request, 'events/event/calculated.html', {'amount': amount,
-                                                                'start': start,
-                                                                'end': end})
-    return HttpResponse('You have no events in this period')
+def calculate(request):
+    if request.method == 'POST':
+        form = CalculateSumForm(request.POST)
+        if form.is_valid():
+            start = form.cleaned_data['start']
+            end = form.cleaned_data['end']
+            events = Event.objects.filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
+            if events:
+                amount = 0
+                for event in events:
+                    amount += event.price
+                return render(request, 'events/event/calculate.html', {'amount': amount,
+                                                                       'start': start,
+                                                                       'end': end, 'form': form})
+            return HttpResponse('You have no events in this period')
+    form = CalculateSumForm()
+    return render(request, 'events/event/calculate.html', {'form': form})

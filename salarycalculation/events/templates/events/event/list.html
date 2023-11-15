@@ -3,7 +3,6 @@
 {% block title %}Event list{% endblock %}
 
 {% block content %}
-    {{ user.id }}
     {% if not events %}{{ empty_event_list_msg }}{% endif %}
     {% for event in events %}
         <p2>

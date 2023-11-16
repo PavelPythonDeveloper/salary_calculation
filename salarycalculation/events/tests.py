@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from .models import Event
@@ -18,6 +20,9 @@ def create_event(title, comment, date_of_the_event, price, creator):
 
 class EventEventsListViewTest(TestCase):
     def setUp(self):
+        """
+        Create and login test user
+        """
         User.objects.create_user(username='tester', password='12345')
         self.client.login(username='tester', password='12345')
 
@@ -57,12 +62,25 @@ class EventEventsDetailViewTest(TestCase):
         self.assertContains(response, 'We test our code sometimes')
         self.assertContains(response, '1000')
 
-# class EventCalculateViewTest(TestCase):
-#     def test_calculate_is_available(self):
-#
-#         user = User.objects.create_user(username='tester', password='12345')
-#         logged_in = self.client.login(username='tester', password='12345')
-#         event1 = create_event(title='event1', price=1000, creator=user)
-#         event2 = create_event(title='event2', price=1000, creator=user)
-#         event3 = create_event(title='event3', price=1000, creator=user)
-#         event4 = create_event(title='event4', price=1000, creator=user)
+
+class EventCalculateViewTest(TestCase):
+    def setUp(self):
+        username = 'tester'
+        password = '12345'
+        user = User.objects.create_user(username=username, password=password)
+        titles = ['title1', 'title2', 'title3', 'title4', 'title5', 'title6', 'title7', 'title8', 'title9', 'title10']
+        price = 500
+        creator = user
+        date_of_the_event = timezone.now() - timedelta(days=4)
+        self.client.login(username=username, password=password)
+        for num in range(10):
+            create_event(title=titles[num],
+                         comment='comment',
+                         date_of_the_event=date_of_the_event + timedelta(days=num),
+                         price=price,
+                         creator=creator)
+
+    def test_calculate_is_available(self):
+        response = self.client.get(reverse('events:calculate'))
+        self.assertEqual(response.status_code, 200)
+

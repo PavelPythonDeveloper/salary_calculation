@@ -17,12 +17,14 @@ def create_event(title, comment, date_of_the_event, price, creator):
 
 
 class EventEventsListViewTest(TestCase):
+    def setUp(self):
+        User.objects.create_user(username='tester', password='12345')
+        self.client.login(username='tester', password='12345')
+
     def test_no_event_exists(self):
         """
         If user has no events, an appropriate message is displayed.
         """
-        User.objects.create_user(username='tester', password='12345')
-        self.client.login(username='tester', password='12345')
         response = self.client.get(reverse('events:events_list'))
 
         self.assertEqual(response.status_code, 200)
@@ -33,7 +35,7 @@ class EventEventsListViewTest(TestCase):
         """
         If unlogged user tries access to Event list he redirects to log-in
         """
-        User.objects.create_user(username='tester', password='12345')
+        self.client.logout()
         response = self.client.get(reverse('events:events_list'))
         self.assertRedirects(response, '/users/login/?next=/events/list/', status_code=302, target_status_code=200)
 

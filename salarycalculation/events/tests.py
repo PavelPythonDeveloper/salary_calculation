@@ -39,17 +39,28 @@ class EventEventsListViewTest(TestCase):
 
 
 class EventEventsDetailViewTest(TestCase):
-    def test_event_detail_is_available(self):
+    def setUp(self):
         user = User.objects.create_user(username='tester', password='12345')
-        logged_in = self.client.login(username='tester', password='12345')
-        event = create_event(title='Testing',
-                             comment='We test our code sometimes',
-                             date_of_the_event=timezone.now() + timedelta(days=3),
-                             price=1000,
-                             creator=user)
+        self.client.login(username='tester', password='12345')
+        self.event = create_event(title='Testing',
+                                  comment='We test our code sometimes',
+                                  date_of_the_event=timezone.now() + timedelta(days=3),
+                                  price=1000,
+                                  creator=user)
 
-        response = self.client.get(reverse('events:events_detail', kwargs={'id': event.id}))
+    def test_event_detail_is_available(self):
+        response = self.client.get(reverse('events:events_detail', kwargs={'id': self.event.id}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Testing')
         self.assertContains(response, 'We test our code sometimes')
         self.assertContains(response, '1000')
+
+# class EventCalculateViewTest(TestCase):
+#     def test_calculate_is_available(self):
+#
+#         user = User.objects.create_user(username='tester', password='12345')
+#         logged_in = self.client.login(username='tester', password='12345')
+#         event1 = create_event(title='event1', price=1000, creator=user)
+#         event2 = create_event(title='event2', price=1000, creator=user)
+#         event3 = create_event(title='event3', price=1000, creator=user)
+#         event4 = create_event(title='event4', price=1000, creator=user)

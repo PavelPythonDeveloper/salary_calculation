@@ -10,6 +10,7 @@
     {{ request.user.username }}
     <a href="{% url 'events:events_list' %}">Events list</a>
     <a href="{% url 'events:calculate' %}">Calculate Sum</a>
+    <a href="{% url 'events:create' %}">Create new event</a>
     <a href="{% url 'users:logout' %}">Logout</a>
 
 {% else %}

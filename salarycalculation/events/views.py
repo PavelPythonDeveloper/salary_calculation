@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponse
 from .models import Event
 from django.contrib.auth.decorators import login_required
-from .forms import CalculateSumForm
+from .forms import CalculateSumForm, CreateNewEventForm
 
 
 @login_required
@@ -42,3 +42,20 @@ def calculate(request):
             return HttpResponse('You have no events in this period')
     form = CalculateSumForm()
     return render(request, 'events/event/calculate.html', {'form': form})
+
+
+@login_required
+def create_new_event(request):
+    if request.method == 'POST':
+        form = CreateNewEventForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            comment = form.cleaned_data['comment']
+            date_of_the_event = form.cleaned_data['date_of_the_event']
+            price = form.cleaned_data['price']
+            event = Event(title=title,
+                          comment=comment,
+                          date_of_the_event=date_of_the_event,
+                          price=price)
+    form = CreateNewEventForm()
+    return render(request, 'events/event/create.html', {'form': form})

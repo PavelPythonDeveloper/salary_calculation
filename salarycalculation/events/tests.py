@@ -6,6 +6,7 @@ from .models import Event
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import User
+from .forms import CalculateSumForm
 
 
 def create_event(title, comment, date_of_the_event, price, creator):
@@ -83,4 +84,6 @@ class EventCalculateViewTest(TestCase):
     def test_calculate_is_available(self):
         response = self.client.get(reverse('events:calculate'))
         self.assertEqual(response.status_code, 200)
-
+        response = self.client.post('/events/calculate/', data={'Start': '10.11.2023 10:00',
+                                                                'End': '12.12.2023 18:00'})
+        self.assertEqual(response.status_code, 200)

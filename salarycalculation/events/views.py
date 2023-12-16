@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import HttpResponse
 from .models import Event
 from django.contrib.auth.decorators import login_required
 from .forms import CalculateSumForm, CreateNewEventForm
+from django.forms.models import model_to_dict
 
 
 @login_required
@@ -53,9 +54,37 @@ def create_new_event(request):
             comment = form.cleaned_data['comment']
             date_of_the_event = form.cleaned_data['date_of_the_event']
             price = form.cleaned_data['price']
+            creator = request.user
             event = Event(title=title,
                           comment=comment,
                           date_of_the_event=date_of_the_event,
-                          price=price)
+                          price=price, creator=creator)
+            event.save()
+            return redirect('events:events_list')
     form = CreateNewEventForm()
     return render(request, 'events/event/create.html', {'form': form})
+
+
+@login_required
+def delete_event(request, id):
+    event = get_object_or_404(Event, id=id)
+    if event:
+        event.delete()
+    return redirect('events:events_list')
+
+
+@login_required
+def update_event(request, id):
+    event = get_object_or_404(Event, id=id)
+    if request.method == 'POST':
+        form = CreateNewEventForm(request.POST)
+        if form.is_valid():
+            event.title = form.cleaned_data['title']
+            event.comment = form.cleaned_data['comment']
+            event.price = form.cleaned_data['price']
+            event.date_of_the_event = form.cleaned_data['date_of_the_event']
+            event.save()
+            return redirect('events:events_list')
+
+    form = CreateNewEventForm(initial=model_to_dict(event))
+    return render(request, 'events/event/create.html', {'form': form, 'id': event.id, 'action': 'update'})

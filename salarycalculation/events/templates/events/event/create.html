@@ -7,7 +7,7 @@
         <form action="{% url 'events:create' %}" method="post">
     {% endif %}
     {% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
     <button type="submit">Create</button>
     </form>
 {% endblock %}

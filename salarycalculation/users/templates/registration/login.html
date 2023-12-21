@@ -2,7 +2,10 @@
 <form action="{% url 'users:login' %}" method="POST" novalidate>
 {% for field in form %}
     {% csrf_token %}
-    {{ field.errors }}
+    {% if field.errors %}
+
+    Your {{ field.label }} didn't match. Please try again!<br>
+    {% endif %}
     {{ field.label_tag }} {{ field }}<br>
 {% endfor %}
      <input type="hidden" name="next" value="{% url 'events:events_list' %}">

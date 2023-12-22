@@ -4,6 +4,7 @@ from .models import Event
 from django.contrib.auth.decorators import login_required
 from .forms import CalculateSumForm, CreateNewEventForm
 from django.forms.models import model_to_dict
+from django.contrib import messages
 
 
 @login_required
@@ -60,6 +61,7 @@ def create_new_event(request):
                           date_of_the_event=date_of_the_event,
                           price=price, creator=creator)
             event.save()
+            messages.success(request, "You have been created new event!")
             return redirect('events:events_list')
     form = CreateNewEventForm()
     return render(request, 'events/event/create.html', {'form': form})
@@ -70,6 +72,7 @@ def delete_event(request, id):
     event = get_object_or_404(Event, id=id)
     if event:
         event.delete()
+        messages.success(request, "You have been deleted the event!")
     return redirect('events:events_list')
 
 
@@ -84,6 +87,7 @@ def update_event(request, id):
             event.price = form.cleaned_data['price']
             event.date_of_the_event = form.cleaned_data['date_of_the_event']
             event.save()
+            messages.success(request, "You have been updated the event!")
             return redirect('events:events_list')
 
     form = CreateNewEventForm(initial=model_to_dict(event))

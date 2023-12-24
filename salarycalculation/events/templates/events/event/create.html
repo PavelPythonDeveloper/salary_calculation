@@ -2,12 +2,19 @@
 
 {% block content %}
     {% if action == 'update' %}
-        <form action="{% url 'events:update' id=id %}" method="post">
+            <form action="{% url 'events:update' id=id %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Update</button>
+            </form>
+
     {% else %}
-        <form action="{% url 'events:create' %}" method="post">
+            <form action="{% url 'events:create' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Create</button>
+            </form>
+
     {% endif %}
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-    </form>
+
 {% endblock %}

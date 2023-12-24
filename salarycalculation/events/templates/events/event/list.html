@@ -4,18 +4,45 @@
 
 {% block content %}
     {% if not events %}{{ empty_event_list_msg }}{% endif %}
-    {% for event in events %}
-        <p2>
+    {% for event in page_obj %}
+        <span>
             title:
             <a href="{% url 'events:events_detail' event.id %}">
                 {{ event.title }}
             </a><br>
-        </p2>
+        </span>
         Date of the event:
-        <p2>{{ event.date_of_the_event }}</p2><br>
+        <span>{{ event.date_of_the_event }}</span><br>
         Price:
-        <p2>{{ event.price }}</p2><br>
-        <p2><a href="{% url 'events:delete' event.id %}">Delete</a></p2>  <p2><a href="{% url 'events:update' event.id %}">Update</a></p2>
+        <span>{{ event.price }}</span><br>
+        <span><a href="{% url 'events:delete' event.id %}">Delete</a></span>  <span><a href="{% url 'events:update' event.id %}">Update</a></span>
         <hr>
     {% endfor %}
+
+
+    <div class="pagination">
+    <span class="step-links">
+<!--        {% if page_obj.has_previous %}-->
+<!--            <a href="?page=1">&laquo; first</a>-->
+<!--            <a href="?page={{ page_obj.previous_page_number }}">previous</a>-->
+<!--        {% endif %}-->
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                {% for p in page_range %}
+
+                    {% if page_obj.number == p %}
+                        <a href="?page={{ p }}" style="font-weight: bold;">{{ p }}</a>
+                    {% else %}
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    {% endif %}
+                {% endfor %}
+        </span>
+
+<!--        {% if page_obj.has_next %}-->
+<!--            <a href="?page={{ page_obj.next_page_number }}">next</a>-->
+<!--            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>-->
+<!--        {% endif %}-->
+    </span>
+</div>
 {% endblock %}

@@ -1,4 +1,5 @@
-
+{% extends 'base.html' %}
+{% block content %}
 <form action="{% url 'users:login' %}" method="POST" novalidate>
 {% for field in form %}
     {% csrf_token %}
@@ -6,9 +7,11 @@
 
     Your {{ field.label }} didn't match. Please try again!<br>
     {% endif %}
+<!--    {{ field.errors }}-->
     {{ field.label_tag }} {{ field }}<br>
 {% endfor %}
      <input type="hidden" name="next" value="{% url 'events:events_list' %}">
 
     <button type="submit">log in</button>
 </form>
+{% endblock %}

@@ -12,7 +12,7 @@ class Event(models.Model):
     price = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ['date_of_the_event']
+        ordering = ['-date_of_the_event']
 
     def __str__(self):
         return self.title

@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import CalculateSumForm, CreateNewEventForm
 from django.forms.models import model_to_dict
 from django.contrib import messages
+from django.core.paginator import Paginator
+import datetime
 
 
 @login_required
@@ -35,8 +37,14 @@ def calculate(request):
     if request.method == 'POST':
         form = CalculateSumForm(request.POST)
         if form.is_valid():
-            start = form.cleaned_data['start']
-            end = form.cleaned_data['end']
+            start_date = form.cleaned_data['start_date']
+            start_time = form.cleaned_data['start_time']
+
+            end_date = form.cleaned_data['end_date']
+            end_time = form.cleaned_data['end_time']
+
+            start = datetime.datetime.combine(start_date, start_time)
+            end = datetime.datetime.combine(end_date, end_time)
             events = Event.objects.filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
             if events:
                 amount = 0
@@ -58,11 +66,13 @@ def create_new_event(request):
             title = form.cleaned_data['title']
             comment = form.cleaned_data['comment']
             date_of_the_event = form.cleaned_data['date_of_the_event']
+            time_of_the_event = form.cleaned_data['time_of_the_event']
+            date_time_of_the_event = datetime.datetime.combine(date_of_the_event, time_of_the_event)
             price = form.cleaned_data['price']
             creator = request.user
             event = Event(title=title,
                           comment=comment,
-                          date_of_the_event=date_of_the_event,
+                          date_of_the_event=date_time_of_the_event,
                           price=price, creator=creator)
             event.save()
             messages.success(request, "You have been created new event!")

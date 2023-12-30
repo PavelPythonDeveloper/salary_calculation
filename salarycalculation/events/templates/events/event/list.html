@@ -3,7 +3,7 @@
 {% block title %}Event list{% endblock %}
 
 {% block content %}
-    {% if not events %}{{ empty_event_list_msg }}{% endif %}
+    {% if not events %}{{ empty_event_list_msg }}<a href="{% url 'events:create' %}">Add</a> {% endif %}
     {% for event in page_obj %}
         <span>
             title:

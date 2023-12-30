@@ -8,7 +8,7 @@
 </form>
 
     {% if amount %}
-    <p>From {{ start }} to {{ end }} your earnings is {{ amount }}</p>
+    <p>From {{ start|date:'d.m.Y H:i' }} to {{ end|date:'d.m.Y H:i' }} your earnings is {{ amount }}</p>
     {% endif %}
 
 {% endblock %}

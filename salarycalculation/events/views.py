@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Event
 from django.contrib.auth.decorators import login_required
 from .forms import CalculateSumForm, CreateNewEventForm
-from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.core.paginator import Paginator
 import datetime
+from django.utils.timezone import make_aware
 
 
 @login_required
@@ -77,6 +77,8 @@ def create_new_event(request):
             event.save()
             messages.success(request, "You have been created new event!")
             return redirect('events:events_list')
+        return render(request, 'events/event/create.html', {'form': form})
+
     form = CreateNewEventForm()
     return render(request, 'events/event/create.html', {'form': form})
 
@@ -99,10 +101,23 @@ def update_event(request, id):
             event.title = form.cleaned_data['title']
             event.comment = form.cleaned_data['comment']
             event.price = form.cleaned_data['price']
-            event.date_of_the_event = form.cleaned_data['date_of_the_event']
+            date_of_the_event = form.cleaned_data['date_of_the_event']
+            time_of_the_event = form.cleaned_data['time_of_the_event']
+            date_time = datetime.datetime.combine(date_of_the_event, time_of_the_event)
+            aware = make_aware(date_time, timezone=request.session.get("django_timezone"))
+            event.date_of_the_event = aware
             event.save()
+
             messages.success(request, "You have been updated the event!")
+
             return redirect('events:events_list')
 
-    form = CreateNewEventForm(initial=model_to_dict(event))
+    date = event.date_of_the_event.date()
+    times = event.date_of_the_event.time()
+    data = {'date_of_the_event': date.strftime('%d.%m.%Y'),
+            'time_of_the_event': times.strftime('%H:%M'),
+            'price': event.price,
+            'comment': event.comment,
+            'title': event.title}
+    form = CreateNewEventForm(data)
     return render(request, 'events/event/create.html', {'form': form, 'id': event.id, 'action': 'update'})

@@ -7,7 +7,7 @@
     <form action="{% url 'events:update' id=id %}" method="post" novalidate>
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Update</button>
+                <button type="submit">Update</button> <a href="{% url 'events:events_list' %}">Cancel</a>
             </form>
 
     {% else %}

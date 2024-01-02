@@ -86,10 +86,11 @@ def create_new_event(request):
 @login_required
 def delete_event(request, id):
     event = get_object_or_404(Event, id=id)
-    if event:
+    if request.method == 'POST':
         event.delete()
         messages.success(request, "You have been deleted the event!")
-    return redirect('events:events_list')
+        return redirect('events:events_list')
+    return render(request, 'events/event/delete_confirmation.html', {'event_id': event.id})
 
 
 @login_required

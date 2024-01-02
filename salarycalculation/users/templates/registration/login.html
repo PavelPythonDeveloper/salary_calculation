@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="{% url 'users:login' %}" method="POST" novalidate>
-{% for field in form %}
-    {% csrf_token %}
-    {% if field.errors %}
 
-    Your {{ field.label }} didn't match. Please try again!<br>
-    {% endif %}
-<!--    {{ field.errors }}-->
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+<form action="{% url 'users:login' %}" method="POST" novalidate>
+    {% csrf_token %}
+{% for field in form %}
+   {{ field.errors }}
     {{ field.label_tag }} {{ field }}<br>
 {% endfor %}
      <input type="hidden" name="next" value="{% url 'events:events_list' %}">
-
     <button type="submit">log in</button>
 </form>
 {% endblock %}

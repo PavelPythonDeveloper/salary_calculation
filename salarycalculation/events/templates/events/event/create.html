@@ -1,5 +1,7 @@
 {% extends 'events/base.html' %}
 
+{% block title %}Create{% endblock %}
+
 {% block content %}
     {% if action == 'update' %}
     <form action="{% url 'events:update' id=id %}" method="post" novalidate>

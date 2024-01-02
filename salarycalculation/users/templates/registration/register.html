@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Registration{% endblock %}
 
+{% block content %}
 <form method="POST" novalidate>
     {% csrf_token %}
     {% for field in form %}
@@ -10,3 +13,4 @@
 
     Уже есть аккаунт? <a href="{% url 'users:login' %}">Вход</a>
 </form>
+{% endblock %}

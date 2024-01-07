@@ -3,26 +3,57 @@
 <html lang="en-us">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'events/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'events/style.css' %}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% if request.user.is_authenticated %}
-    {{ request.user.username }}
-    <a href="{% url 'events:events_list' %}">Events list</a>
-    <a href="{% url 'events:calculate' %}">Calculate Sum</a>
-    <a href="{% url 'events:create' %}">Create new event</a>
-    <a href="{% url 'users:logout' %}">Logout</a>
 
-{% else %}
-{% endif %}
 
+    {% if request.user.is_authenticated %}
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <ul class="menu">
+
+
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'events:events_list' %}">Events list</a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'events:calculate' %}">Calculate Sum</a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'events:create' %}">Create new event</a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'users:logout' %}">Logout</a>
+                    </li>
+                </ul>
+
+                <a href="#" class="logo">
+                    <img class="logo-img" src="" alt='logo'>
+                </a>
+
+                <a class="menu-link" href="#">{{ request.user.username }}</a>
+            </nav>
+        </div>
+    </header>
+    {% endif %}
+    <div class="container">
+        {% if messages %}
+        <div class="messages-holder">
+            <ul class="messages">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
     <div id="content">
         {% block content %}
         {% endblock %}

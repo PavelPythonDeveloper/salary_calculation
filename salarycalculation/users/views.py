@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm, UserLoginForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 def register(request):
@@ -17,5 +18,11 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+class LoginFormView(SuccessMessageMixin, LoginView):
+    template_name = 'registration/login.html'
+    success_url = '/success_url/'
+    success_message = "You were successfully logged in."
 
 

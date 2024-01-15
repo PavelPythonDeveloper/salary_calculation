@@ -20,9 +20,11 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+def profile(request):
+    user = request.user
+
+
 class LoginFormView(SuccessMessageMixin, LoginView):
     template_name = 'registration/login.html'
     success_url = '/success_url/'
     success_message = "You were successfully logged in."
-
-

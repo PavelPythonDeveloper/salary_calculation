@@ -1,0 +1,95 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Calculate{% endblock %}
+
+{% block content %}
+<div class="container">
+     <div class="form">
+        <div class="form-wrapper">
+            <form action="{% url 'events:calculate' %}" method="post">
+                {% csrf_token %}
+                <div class="form-control">
+                    <div class="form-control-label">
+                        <span class="material-symbols-outlined">
+                            calendar_month
+                        </span>
+                        <div class="label">
+                            {{ form.start_date.label }}
+                        </div>
+                    </div>
+                    <div class="field-error">
+                        {{ form.start_date.errors }}
+                    </div>
+                    <div class="form-control-field">
+                        {{ form.start_date }}
+                    </div>
+                </div>
+
+                <div class="form-control">
+                    <div class="form-control-label">
+                        <span class="material-symbols-outlined">
+                            schedule
+                        </span>
+                        <div class="label">
+                            {{ form.start_time.label }}
+                        </div>
+                    </div>
+                    <div class="field-error">
+                        {{ form.start_time.errors }}
+                    </div>
+                    <div class="form-control-field">
+                        {{ form.start_time }}
+                    </div>
+                </div>
+
+                <div class="form-control">
+                    <div class="form-control-label">
+                        <span class="material-symbols-outlined">
+                            calendar_month
+                        </span>
+                        <div class="label">
+                            {{ form.end_date.label }}
+                        </div>
+                    </div>
+                    <div class="field-error">
+                        {{ form.end_date.errors }}
+                    </div>
+                    <div class="form-control-field">
+                        {{ form.end_date }}
+                    </div>
+                </div>
+
+                <div class="form-control">
+                    <div class="form-control-label">
+                        <span class="material-symbols-outlined">
+                            schedule
+                        </span>
+                        <div class="label">
+                            {{ form.end_time.label }}
+                        </div>
+                    </div>
+                    <div class="field-error">
+                        {{ form.end_time.errors }}
+                    </div>
+                    <div class="form-control-field">
+                        {{ form.end_time }}
+                    </div>
+                </div>
+
+        <div class="form-submit-wrapper">
+                    <span class="material-symbols-outlined">
+                                add_circle
+                            </span>
+                    <input class="form-submit" type="submit" value="Calculate">
+                </div>
+
+    </form>
+        </div>
+     </div>
+    {% if amount %}
+        <p>From {{ start|date:'d.m.Y H:i' }} to {{ end|date:'d.m.Y H:i' }} your earnings is {{ amount }}</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

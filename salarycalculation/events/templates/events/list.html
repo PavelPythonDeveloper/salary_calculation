@@ -1,0 +1,72 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Event list{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        {% if not events %}
+            <div class="empty-message">
+                {{ empty_event_list_msg }}<a href="{% url 'events:create' %}">Add</a>
+            </div>
+        {% endif %}
+        {% for event in page_obj %}
+            <div class="event-item">
+                {% if event.in_future %}
+                    <span>Future</span>
+                {% else %}
+                    <span>Past</span>
+                {% endif %}
+                <div class="event-title">
+                        <span class="material-symbols-outlined">
+                            list_alt
+                        </span>
+                        <a href="{% url 'events:update' event.id %}">
+                            {{ event.title }}
+                        </a><br>
+                </div>
+                <div class="event-date">
+                    <span class="material-symbols-outlined">
+                        schedule
+                    </span>
+                    <span>{{ event.date_of_the_event|date:'d.m.Y H:i' }}</span><br>
+                </div>
+                 <div class="event-price">
+                     <span class="material-symbols-outlined">
+                        request_quote
+                     </span>
+                    {{ event.price }}<br>
+                 </div>
+                <div class="event-delete-update">
+                    <div class="event-delete">
+                        <span class="material-symbols-outlined">delete</span>
+                        <a href="{% url 'events:delete' event.id %}">Delete</a>
+                    </div>
+                    <div class="event-update">
+                        <span class="material-symbols-outlined">update</span>
+                        <a href="{% url 'events:update' event.id %}">Update</a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+    {% if events %}
+        <div class="pagination">
+            <span class="step-links">
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        {% for p in page_range %}
+                            {% if page_obj.number == p %}
+                                <a href="?page={{ p }}" style="font-weight: bold;">{{ p }}</a>
+                            {% else %}
+                                <a href="?page={{ p }}">{{ p }}</a>
+                            {% endif %}
+                        {% endfor %}
+                </span>
+            </span>
+        </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -11,6 +11,20 @@ class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events', default=None)
     price = models.IntegerField(default=0)
 
+    def in_future(self):
+        if self.date_of_the_event > timezone.now():
+            print(timezone.now())
+            return True
+        return False
+
+    def in_past(self):
+        if self.date_of_the_event < timezone.now():
+            return True
+        return False
+
+    def today(self):
+        pass
+
     class Meta:
         ordering = ['-date_of_the_event']
 

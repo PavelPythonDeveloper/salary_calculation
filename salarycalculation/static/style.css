@@ -1,0 +1,270 @@
+body {
+    background-color: white;
+
+
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header {
+    background-color: #dadcde;
+    padding: 10px 0 10px;
+    color: black;
+    position: sticky;
+    top: 0;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4d4d4d;
+
+}
+
+.menu {
+    display: flex;
+}
+
+.menu-item {
+    padding-right: 30px;
+}
+
+.menu-link {
+    font-size: 18px;
+    line-height: 29px;
+}
+
+.menu-link:hover {
+
+    color: red;
+}
+
+.content {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(230px,1fr));
+    grid-gap: 16px;
+    grid-auto-flow: dense;
+    max-width: inherit;
+    margin: 0 auto;
+
+    background-color:  white;
+}
+
+.event-item {
+    margin: 20px 0px;
+    padding: 8px 8px;
+    background-color: white;
+    min-width: 233px;
+    min-height: 90px;
+    border: solid;
+    border-radius: 4px;
+    border-width: 3px;
+    border-color: #dadcde;
+    font-size: 15px;
+    color: #4d4d4d;
+
+}
+
+.messages-holder {
+    text-align: center;
+    margin: 14px 0 0 0;
+    padding: 0 0;
+    border: solid;
+    border-width: 1px;
+    border-color: green;
+    border-radius: 4px;
+    background-color: #6cff47;
+}
+
+.messages {
+    margin: 7px auto;
+    color: green;
+    font-size: 20px;
+}
+
+.event-title,
+.event-date,
+.event-price{
+    padding: 0;
+    display: flex;
+    border: solid;
+    border-width: inherit;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    border-color: #dadcde;
+    align-items: center;
+}
+
+.event-delete-update {
+    display: flex;
+    justify-content: space-between;
+    color: #57ff52;
+}
+
+.event-delete{
+    padding: 3px;
+    display: flex;
+    justify-content: space-between;
+    border: solid;
+    border-width: 1px;
+    border-color: #dadcde;
+    border-radius: 4px;
+    color: #9e020c;
+    align-items: center;
+}
+
+.event-delete:hover{
+    color: #f70515;
+}
+
+.event-update:hover{
+    color: #02e30e;
+
+}
+
+.event-update{
+    padding: 3px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #016e07;
+    border: solid;
+    border-width: 1px;
+    border-color: #dadcde;
+    border-radius: 4px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 3,
+  'opsz' 15
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+}
+
+.form-control{
+    margin-top: 15px;
+}
+
+#id_title,
+#id_date_of_the_event,
+#id_time_of_the_event,
+#id_comment,
+#id_price,
+#id_username,
+#id_password,
+#id_start_date,
+#id_start_time,
+#id_end_date,
+#id_end_time{
+    outline: none;
+    border: solid;
+    border-width: 3px;
+    border-radius: 4px;
+    height: 20px;
+    width: 325px;
+    border-color: #dadcde;
+    font-size: 15px;
+    color: #4d4d4d;
+}
+
+#id_title:hover,
+#id_date_of_the_event:hover,
+#id_time_of_the_event:hover,
+#id_comment:hover,
+#id_price:hover,
+#id_username:hover,
+#id_password:hover,
+#id_start_date:hover,
+#id_start_time:hover,
+#id_end_date:hover,
+#id_end_time:hover,
+.event-item:hover ,
+.form-wrapper:hover,
+.event-title:hover,
+.event-date:hover,
+.event-price:hover,
+.form-submit-wrapper:hover{
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 255, .2);
+    transition: .2s;
+}
+
+.form-submit{
+    background-color: white;
+    border-radius: 0px;
+    border-width: 0px;
+    color: #016e07;
+}
+
+.form-wrapper{
+    padding: 15px;
+    border: solid;
+    border-radius: 4px;
+    border-width: 3px;
+    border-color: #dadcde;
+    font-size: 15px;
+    color: #4d4d4d;
+}
+
+
+.form-control-label{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.form-submit-wrapper{
+    border: solid;
+    border-width: 3px;
+    border-radius: 4px;
+     border-color: #dadcde;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    padding: 5px 20px 5px 20px;
+
+    width: 90px;
+    color: #016e07;
+}
+
+.errorlist{
+    color: red;
+}
+
+.empty-message{
+    display: flex;
+    align-items: center;
+}

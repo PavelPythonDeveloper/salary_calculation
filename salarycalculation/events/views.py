@@ -13,11 +13,11 @@ from django.utils.timezone import make_aware
 def events_list(request):
     events = Event.objects.filter(creator=request.user)
     empty_event_list_msg = 'You have no event. Add one?'
-    paginator = Paginator(events, 25)
+    paginator = Paginator(events, 10)
     page_range = paginator.page_range
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    return render(request, 'events/event/list.html',
+    return render(request, 'events/list.html',
                   {'events': events,
                    'empty_event_list_msg': empty_event_list_msg,
                    'user_id': request.user.id, "page_obj": page_obj, "page_range": page_range}
@@ -28,7 +28,7 @@ def events_list(request):
 def events_detail(request, id):
     event = get_object_or_404(Event, id=id)
     if event.creator == request.user:
-        return render(request, 'events/event/detail.html', {'event': event})
+        return render(request, 'events/detail.html', {'event': event})
     return HttpResponse("You can't view other people's events")
 
 
@@ -50,12 +50,12 @@ def calculate(request):
                 amount = 0
                 for event in events:
                     amount += event.price
-                return render(request, 'events/event/calculate.html', {'amount': amount,
+                return render(request, 'events/calculate.html', {'amount': amount,
                                                                        'start': start,
                                                                        'end': end, 'form': form})
             return HttpResponse('You have no events in this period')
     form = CalculateSumForm()
-    return render(request, 'events/event/calculate.html', {'form': form})
+    return render(request, 'events/calculate.html', {'form': form})
 
 
 @login_required
@@ -77,10 +77,10 @@ def create_new_event(request):
             event.save()
             messages.success(request, "You have been created new event!")
             return redirect('events:events_list')
-        return render(request, 'events/event/create.html', {'form': form})
+        return render(request, 'events/create.html', {'form': form})
 
     form = CreateNewEventForm()
-    return render(request, 'events/event/create.html', {'form': form})
+    return render(request, 'events/create.html', {'form': form})
 
 
 @login_required
@@ -90,7 +90,7 @@ def delete_event(request, id):
         event.delete()
         messages.success(request, "You have been deleted the event!")
         return redirect('events:events_list')
-    return render(request, 'events/event/delete_confirmation.html', {'event_id': event.id})
+    return render(request, 'events/delete_confirmation.html', {'event_id': event.id})
 
 
 @login_required
@@ -121,4 +121,4 @@ def update_event(request, id):
             'comment': event.comment,
             'title': event.title}
     form = CreateNewEventForm(data)
-    return render(request, 'events/event/create.html', {'form': form, 'id': event.id, 'action': 'update'})
+    return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action': 'update'})

@@ -3,10 +3,14 @@
 {% block title %}Logged out!{% endblock %}
 
 {% block content %}
-
+<div class="container">
 <h1>Logged out</h1>
-
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 <p>You have been successfully logged out.
     You can <a href="{% url 'users:login' %}">log-in again</a></p>
-
+</div>
 {% endblock %}

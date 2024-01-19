@@ -25,14 +25,6 @@ def events_list(request):
 
 
 @login_required
-def events_detail(request, id):
-    event = get_object_or_404(Event, id=id)
-    if event.creator == request.user:
-        return render(request, 'events/detail.html', {'event': event})
-    return HttpResponse("You can't view other people's events")
-
-
-@login_required
 def calculate(request):
     if request.method == 'POST':
         form = CalculateSumForm(request.POST)
@@ -51,8 +43,8 @@ def calculate(request):
                 for event in events:
                     amount += event.price
                 return render(request, 'events/calculate.html', {'amount': amount,
-                                                                       'start': start,
-                                                                       'end': end, 'form': form})
+                                                                 'start': start,
+                                                                 'end': end, 'form': form})
             return HttpResponse('You have no events in this period')
     form = CalculateSumForm()
     return render(request, 'events/calculate.html', {'form': form})

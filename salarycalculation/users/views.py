@@ -1,8 +1,8 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -20,9 +20,15 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+@login_required
 def profile(request):
     user = request.user
+    context = {'username': user.username}
+    return render(request, 'registration/profile.html', context=context)
 
+@login_required
+def username_change(request):
+    pass
 
 class LoginFormView(SuccessMessageMixin, LoginView):
     template_name = 'registration/login.html'

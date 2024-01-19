@@ -88,6 +88,8 @@ def delete_event(request, id):
 @login_required
 def update_event(request, id):
     event = get_object_or_404(Event, id=id)
+    if event.creator != request.user:
+        return HttpResponse("You can't see it!")
     if request.method == 'POST':
         form = CreateNewEventForm(request.POST)
         if form.is_valid():

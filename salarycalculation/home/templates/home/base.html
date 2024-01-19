@@ -42,7 +42,7 @@
                     <img class="logo-img" src="" alt='logo'>
                 </a>
 
-                <a class="menu-link" href="#">{{ request.user.username }}</a>
+                <a class="menu-link" href="{% url 'users:profile' %}">{{ request.user.username }}</a>
             </nav>
         </div>
     </header>

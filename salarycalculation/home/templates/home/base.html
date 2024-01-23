@@ -49,7 +49,7 @@
     {% endif %}
     <div class="container">
         {% if messages %}
-        <div class="messages-holder">
+        <div id="message" class="messages-holder">
             <ul class="messages">
                 {% for message in messages %}
                 <li>{{ message }}</li>
@@ -62,5 +62,11 @@
         {% block content %}
         {% endblock %}
     </div>
+    <script>
+        setTimeout(() => {
+            const message = document.getElementById('message');
+            message.style.display = 'none';
+          }, 4000);
+    </script>
 </body>
 </html>

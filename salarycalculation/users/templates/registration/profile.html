@@ -1,0 +1,16 @@
+{% extends "home/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class="form">
+            <div class="form-wrapper">
+                <div>username: {{ username }}</div>
+                <div><a href="{% url 'users:username_change' %}">Change username</a></div>
+                <div>Markers:</div>
+                <div><a href="{% url 'users:password_change' %}">Change password</a></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

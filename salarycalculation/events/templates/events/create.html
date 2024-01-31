@@ -1,16 +1,16 @@
 {% extends 'home/base.html' %}
+
 {% load i18n %}
+
 {% block title %}Create{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="form">
+    <div class="wrapper">
         <div class="form-wrapper">
-    {% if action == 'update' %}
-    <form action="{% url 'events:update' id=id %}" method="post" novalidate>
+            {% if action == 'update' %}
+                <form action="{% url 'events:update' id=id %}" method="post" novalidate>
                 {% csrf_token %}
-                {% csrf_token %}
-
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">
@@ -55,7 +55,7 @@
                             {{ form.time_of_the_event.label }}
                         </div>
                     </div>
-                     <div class="field-error">
+                    <div class="field-error">
                         {{ form.title.errors }}
                     </div>
                     <div class="form-control-field">
@@ -88,7 +88,7 @@
                             {{ form.price.label }}
                         </div>
                     </div>
-                     <div class="field-error">
+                    <div class="field-error">
                         {{ form.title.errors }}
                     </div>
                     <div class="form-control-field">
@@ -96,16 +96,11 @@
                     </div>
                 </div>
 
-                  <button class="form-submit" type="submit">{% trans "Update" %}</button> <a href="{% url 'events:events_list' %}">Cancel</a>
+                <button class="form-submit" type="submit">{% trans "Update" %}</button> <button action="{% url 'events:events_list' %}">Cancel</button>
             </form>
-
-
-
-
     {% else %}
             <form action="{% url 'events:create' %}" method="post" novalidate>
                 {% csrf_token %}
-
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">
@@ -191,11 +186,17 @@
                     </div>
                 </div>
 
-                <div class="form-submit-wrapper">
-                    <span class="material-symbols-outlined">
+                <div class="button-holder">
+                    <button class="button submit" type="submit">
+                        <div class="button-inner">
+                            <span class="material-symbols-outlined">
                                 add_circle
                             </span>
-                    <input class="form-submit" type="submit" value="Create">
+                            <div class "button-text">
+                                Create
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </form>
 

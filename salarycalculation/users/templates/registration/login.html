@@ -4,14 +4,17 @@
 
 {% block content %}
 <div class="container">
-    <div class="form">
+    <div class="wrapper">
         <div class="form-wrapper">
-            {% if form.errors %}
-                <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
+            Log-in
 
             <form action="{% url 'users:login' %}" method="POST" novalidate>
                 {% csrf_token %}
+                {% if form.errors %}
+                <div class="errorlist">
+                <p>Your username and password didn't match. Please try again.</p>
+                </div>
+            {% endif %}
                     <div class="form-control">
                         <div class="form-control-label">
                             <span class="material-symbols-outlined">
@@ -21,40 +24,45 @@
                                 {{ form.username.label }}
                             </div>
                         </div>
-                     <div class="field-error">
-                        {{ form.username.errors }}
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.username }}
-                    </div>
-                </div>
-
-
-        <div class="form-control">
-                    <div class="form-control-label">
-                        <span class="material-symbols-outlined">
-                            lock
-                        </span>
-                        <div class="label">
-                            {{ form.password.label }}
+                        <div class="field-error">
+                            {{ form.username.errors }}
                         </div>
-
+                        <div class="form-control-field">
+                            {{ form.username }}
+                        </div>
                     </div>
-                     <div class="field-error">
-                        {{ form.password.errors }}
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.password }}
-                    </div>
-                </div>
-        <input type="hidden" name="next" value="{% url 'events:events_list' %}">
-        <div class="form-submit-wrapper">
-                    <span class="material-symbols-outlined">
-                                login
+                    <div class="form-control">
+                        <div class="form-control-label">
+                            <span class="material-symbols-outlined">
+                                lock
                             </span>
-        <input class="form-submit" type="submit" value="Login">
-        </div>
-    </form>
+                            <div class="label">
+                                {{ form.password.label }}
+                            </div>
+
+                        </div>
+                        <div class="field-error">
+                            {{ form.password.errors }}
+                        </div>
+                        <div class="form-control-field">
+                            {{ form.password }}
+                        </div>
+                    </div>
+                    <input type="hidden" name="next" value="{% url 'events:events_list' %}">
+                    <div class="button-holder">
+                        <button class="button submit">
+                            <div class="button-inner">
+                                <span class="material-symbols-outlined">
+                                    login
+                                </span>
+        
+                                <div class ="button-text">
+                                    log-in
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,12 +1,12 @@
 body {
-    background-color: white;
+    background-color: #ffa55b;
 
 
 }
 
 a {
     text-decoration: none;
-    color: inherit;
+    color: inherit; 
 }
 
 ul {
@@ -16,11 +16,12 @@ ul {
 }
 
 .header {
-    background-color: #dadcde;
+    background-color: #76baff;
     padding: 10px 0 10px;
     color: black;
     position: sticky;
     top: 0;
+    box-shadow: 0px 0px 9px 2px rgba(0, 0, 166, 0.4);
 }
 
 
@@ -35,8 +36,23 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #4d4d4d;
+    color: #f4f8fd;
 
+}
+
+/* .logo-img{
+    max-width: 100%;
+    max-height: 100%;
+} */
+
+.logo-holder{
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.logo-img{
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .menu {
@@ -50,11 +66,14 @@ ul {
 .menu-link {
     font-size: 18px;
     line-height: 29px;
+    display: flex;
+    align-items: center;
 }
 
 .menu-link:hover {
 
-    color: red;
+    color: rgb(48, 0, 207);
+    
 }
 
 .content {
@@ -66,7 +85,7 @@ ul {
     max-width: inherit;
     margin: 0 auto;
 
-    background-color:  white;
+    /* background-color:  white; */
 }
 
 .event-item {
@@ -76,9 +95,11 @@ ul {
     min-width: 233px;
     min-height: 90px;
     border: solid;
-    border-radius: 4px;
+    border-radius: 10px;
     border-width: 3px;
-    border-color: #dadcde;
+    /* #76baff */
+    border-color: rgba(118, 186, 255, 0.4);;
+    box-shadow: 0px 0px 9px 2px rgba(10, 132, 255, 0.843);
     font-size: 15px;
     color: #4d4d4d;
 
@@ -162,7 +183,7 @@ ul {
   'opsz' 15
 }
 
-.form{
+.wrapper{
     display: flex;
     justify-content: center;
     margin-top: 30px;
@@ -172,6 +193,16 @@ ul {
 
 .form-control{
     margin-top: 15px;
+}
+
+.errorlist > li{
+    border: solid;
+    border-radius: 3px;
+    border-color: red;
+    border-width: 1px;
+    background-color: rgb(251, 176, 176);
+    color: rgb(190, 0, 0);
+    margin: 4px 0;
 }
 
 #id_title,
@@ -184,14 +215,20 @@ ul {
 #id_start_date,
 #id_start_time,
 #id_end_date,
-#id_end_time{
+#id_end_time,
+#id_old_password,
+#id_new_password1,
+#id_new_password2{
+    box-sizing: border-box;
     outline: none;
     border: solid;
     border-width: 3px;
     border-radius: 4px;
-    height: 20px;
-    width: 325px;
-    border-color: #dadcde;
+    height: 30px;
+    /* width: inherit; */
+    /* width: 325px; */
+    width: 100%;
+    border-color: rgba(0, 0, 166, 0.4);
     font-size: 15px;
     color: #4d4d4d;
 }
@@ -212,8 +249,10 @@ ul {
 .event-title:hover,
 .event-date:hover,
 .event-price:hover,
-.form-submit-wrapper:hover{
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 255, .2);
+.button:hover{
+
+    box-shadow: 0px 0px 9px 4px rgba(0, 99, 199, 0.66);
+    /* box-shadow: 0px 0px 9px 3px rgba(0, 0, 166, 0.4); */
     transition: .2s;
 }
 
@@ -226,14 +265,17 @@ ul {
 
 .form-wrapper{
     padding: 15px;
+    min-width: 200px;
+    width: 350px;
     border: solid;
-    border-radius: 4px;
+    border-radius: 15px;
     border-width: 3px;
-    border-color: #dadcde;
+    border-color: rgba(0, 0, 166, 0.4);
+    box-shadow: 0px 0px 9px 2px rgba(0, 0, 166, 0.4);
     font-size: 15px;
     color: #4d4d4d;
+    background-color: #ffffff;
 }
-
 
 .form-control-label{
     display: flex;
@@ -242,22 +284,41 @@ ul {
     margin-bottom: 5px;
 }
 
-.form-submit-wrapper{
-    border: solid;
-    border-width: 3px;
-    border-radius: 4px;
-     border-color: #dadcde;
+.button-holder{
     display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    padding: 5px 20px 5px 20px;
+    justify-content: space-around;
+    padding: 23px;
+}
 
-    width: 90px;
-    color: #016e07;
+.button-inner{
+    display: flex;
+    align-items: center;
+}
+
+.button{
+    border: solid;
+    border-radius: 3px;
+    border-color: rgba(0, 0, 166, 0.4);
+    background-color: white;
+    margin: 0 3px;
+}
+
+.submit{
+    color: green;
+}
+
+.remove,
+.cancel{
+    color: rgb(136, 0, 0);
+}
+
+.remove:hover,
+.cancel:hover{
+    color: rgb(219, 0, 0);
+}
+
+.submit:hover{
+    color: rgb(0, 180, 0);
 }
 
 .errorlist{
@@ -267,4 +328,22 @@ ul {
 .empty-message{
     display: flex;
     align-items: center;
+}
+
+.logout-img-wrapper{
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.logout-img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.step-links{
+    padding: 4px;
+    border: solid;
+    border-width: 3px;
+    border-color: #dadcde;
+    border-radius: 6px;
 }

@@ -37,17 +37,33 @@
                      </span>
                     {{ event.price }}<br>
                  </div>
-                <div class="event-delete-update">
-                    <div class="event-delete">
-                        <span class="material-symbols-outlined">delete</span>
-                        <a href="{% url 'events:delete' event.id %}">Delete</a>
-                    </div>
-                    <div class="event-update">
-                        <span class="material-symbols-outlined">update</span>
-                        <a href="{% url 'events:update' event.id %}">Update</a>
-                    </div>
+                <div class="button-holder">
+                    <form action="{% url 'events:delete' event.id %}">
+                    <button class="button remove" type="submit">
+                        <div class="button-inner">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                            <div class="button-text">
+                                Remove
+                            </div>
+                        </div>
+                    </button>
+                </form>
+                        {% comment %} <a href="{% url 'events:delete' event.id %}">Delete</a> {% endcomment %}
+                    <form action="{% url 'events:update' event.id %}">
+                    <button class="button submit">
+                        <div class="button-inner">
+                            <span class="material-symbols-outlined">
+                                update
+                            </span>
+                            <div class="button-text">
+                                Update
+                            </div>
+                        </div>
+                    </button>   
+                </form>
                 </div>
-                <hr>
             </div>
         {% endfor %}
     </div>

@@ -4,12 +4,62 @@
 
 {% block content %}
     <div class='container'>
-        <div class="form">
+        <div class="wrapper">
             <div class="form-wrapper">
-                <div>username: {{ username }}</div>
-                <div><a href="{% url 'users:username_change' %}">Change username</a></div>
+                <div class="form-control">
+                    <div class="form-control-label">
+                        <span class="material-symbols-outlined">
+                            person
+                            </span>
+                        <div class="label">Username</div>
+                    </div>
+                    <div class="form-control-field">
+                        <input id="id_username" type="text"  value={{ username }} disabled >
+                    </div>
+                   
+                    <div class="form-control-label">
+                        <span class="material-symbols-outlined">
+                            lock
+                            </span>
+                        <div class="label">Password</div>
+                    </div>
+                    <div class="form-control-field">
+                        <input id="id_password" type="text"  value="*****" disabled >
+                    </div>
+                </div>
+                
                 <div>Markers:</div>
-                <div><a href="{% url 'users:password_change' %}">Change password</a></div>
+
+
+                <div class="button-holder">
+                    <form action="{% url 'users:username_change' %}">
+                        <button class="button submit">
+                            <div class="button-inner">
+                                <span class="material-symbols-outlined">
+                                    manage_accounts
+                                </span>
+                        
+                                <div class "button-text">
+                                    Change username
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+
+                    <form action="{% url 'users:password_change' %}">
+                        <button class="button submit">
+                            <div class="button-inner">
+                                <span class="material-symbols-outlined">
+                                    settings
+                                </span>
+                        
+                                <div class "button-text">
+                                    Change password
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

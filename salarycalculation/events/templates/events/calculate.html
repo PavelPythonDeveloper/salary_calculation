@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-     <div class="form">
+     <div class="wrapper">
         <div class="form-wrapper">
             <form action="{% url 'events:calculate' %}" method="post">
                 {% csrf_token %}
@@ -28,7 +28,7 @@
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">
-                            schedule
+                            {{ schedule }}
                         </span>
                         <div class="label">
                             {{ form.start_time.label }}
@@ -76,11 +76,29 @@
                     </div>
                 </div>
 
-        <div class="form-submit-wrapper">
-                    <span class="material-symbols-outlined">
+                <div class="button-holder">
+                    <button class="button submit" type="submit">
+                        <div class="button-inner">
+                            <span class="material-symbols-outlined">
                                 add_circle
                             </span>
-                    <input class="form-submit" type="submit" value="Calculate">
+                        
+                            <div class "button-text">
+                                Calculate
+                            </div>
+                        </div>
+                    </button>
+                    <button class="button cancel" type="submit">
+                        <div class="button-inner">
+                            <span class="material-symbols-outlined">
+                                cancel
+                            </span>
+                        
+                            <div class "button-text">
+                                Cancel
+                            </div>
+                        </div>
+                    </button>
                 </div>
 
     </form>

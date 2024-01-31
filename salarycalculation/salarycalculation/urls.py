@@ -20,13 +20,15 @@ from .settings import DEBUG
 
 
 urlpatterns = [
+    path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
     path("events/", include("events.urls")),
-    path('users/', include('users.urls')),
     path('', include('home.urls')),
 ]
 
-if DEBUG:
-    urlpatterns += [
-        path("__debug__/", include("debug_toolbar.urls")),
-    ]
+# if DEBUG:
+#     urlpatterns += [
+#         path("__debug__/", include("debug_toolbar.urls")),
+#     ]
+
+

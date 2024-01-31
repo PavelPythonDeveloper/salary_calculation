@@ -10,13 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <title>{% block title %}{% endblock %}</title>
-  {% if messages %}
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-  {% endif %}
 </head>
 <body>
+  {% if messages %}
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+{% endif %}
 {% block content %}
 {% endblock %}
 </body>

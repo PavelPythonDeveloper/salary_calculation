@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Logged out!{% endblock %}
 
 {% block content %}
 <div class="container">
-<h1>Logged out</h1>
-    {% if messages %}
-        {% for message in messages %}
-            <div>{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-<p>You have been successfully logged out.
-    You can <a href="{% url 'users:login' %}">log-in again</a></p>
+    <div class="wrapper">
+        <div>
+            <h1>Logged out!</h1>
+            <h4>You have been successfully logged out.
+            You can <a href="{% url 'users:login' %}">log-in again</a></h4>
+            <div class="logout-img-wrapper">
+                <img class="logout-img" src="{% static 'logout-frog.jpg' %}" alt="logout-image">
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

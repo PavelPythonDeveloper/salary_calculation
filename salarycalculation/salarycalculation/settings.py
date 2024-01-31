@@ -31,19 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
+    'users.apps.UsersConfig',
+    'home.apps.HomeConfig',
+    'events.apps.EventsConfig',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    
+    # "debug_toolbar",
 
-    "debug_toolbar",
-
-    'home.apps.HomeConfig',
-    'users.apps.UsersConfig',
-    'events.apps.EventsConfig',
+    
+       
 ]
 
 MIDDLEWARE = [
@@ -55,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'salarycalculation.urls'
@@ -132,9 +135,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
     ]
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

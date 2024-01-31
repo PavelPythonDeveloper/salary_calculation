@@ -18,6 +18,12 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
+                <div class="logo-holder">
+                    <a href="#" class="logo" style="display: flex; align-items: center;">
+                        <img class="logo-img" src="{% static 'logo-frog.png' %}" alt='logo'>
+                        <div>SC</div>
+                    </a>
+                    </div>
                 <ul class="menu">
 
 
@@ -37,12 +43,12 @@
                         <a class="menu-link" href="{% url 'users:logout' %}">Logout</a>
                     </li>
                 </ul>
+                
 
-                <a href="#" class="logo">
-                    <img class="logo-img" src="" alt='logo'>
-                </a>
-
-                <a class="menu-link" href="{% url 'users:profile' %}">{{ request.user.username }}</a>
+                <a class="menu-link" href="{% url 'users:profile' %}">
+                    <span class="material-symbols-outlined">
+                        manage_accounts
+                    </span>{{ request.user.username }}</a>
             </nav>
         </div>
     </header>

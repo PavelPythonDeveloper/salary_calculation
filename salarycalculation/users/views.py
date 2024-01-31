@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
 from .forms import UserRegisterForm, UsernameChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages

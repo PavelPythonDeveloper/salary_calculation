@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class Marker(models.Model):
+    name = models.CharField(max_length=50)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='markers', default=None)
+
+
 class Event(models.Model):
     title = models.CharField(max_length=200)
     comment = models.CharField(max_length=200)
@@ -10,6 +15,7 @@ class Event(models.Model):
     date_of_the_event = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events', default=None)
     price = models.IntegerField(default=0)
+    markers = models.ManyToManyField(Marker)
 
     def in_future(self):
         if self.date_of_the_event > timezone.now():
@@ -30,9 +36,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Marker(models.Model):
-    name = models.CharField(max_length=50)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='markers', default=None)
-    events = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='markers', null=True)

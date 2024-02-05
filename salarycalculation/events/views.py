@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
-from .models import Event
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Event, Marker
 from django.contrib.auth.decorators import login_required
 from .forms import CalculateSumForm, CreateNewEventForm
 from django.contrib import messages
@@ -10,8 +10,12 @@ from django.utils.timezone import make_aware
 
 
 @login_required
-def events_list(request):
-    events = Event.objects.filter(creator=request.user)
+def events_list(request, marker_id=None):
+    if marker_id is None:
+        events = Event.objects.filter(creator=request.user)
+    else:
+        events = Event.objects.filter(creator=request.user, markers__id=marker_id)
+
     empty_event_list_msg = 'You have no event. Add one?'
     paginator = Paginator(events, 10)
     page_range = paginator.page_range
@@ -20,7 +24,9 @@ def events_list(request):
     return render(request, 'events/list.html',
                   {'events': events,
                    'empty_event_list_msg': empty_event_list_msg,
-                   'user_id': request.user.id, "page_obj": page_obj, "page_range": page_range}
+                   'user_id': request.user.id,
+                   "page_obj": page_obj,
+                   "page_range": page_range}
                   )
 
 
@@ -116,3 +122,11 @@ def update_event(request, id):
             'title': event.title}
     form = CreateNewEventForm(data)
     return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action': 'update'})
+
+
+@login_required
+def marker_filter(request):
+    marker_id = request.POST.get('filter')
+    if marker_id == 'None':
+        return redirect('events:events_list')
+    return redirect('events:events_list', marker_id=marker_id)

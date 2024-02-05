@@ -7,7 +7,6 @@
     <div class="wrapper">
         <div class="form-wrapper">
             Log-in
-
             <form action="{% url 'users:login' %}" method="POST" novalidate>
                 {% csrf_token %}
                 {% if form.errors %}

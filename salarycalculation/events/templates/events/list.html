@@ -4,18 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="marker-holder">
-        <form  action="{% url 'events:marker_filter' %}" method="post" novalidate>
-            {% csrf_token %}
-            <select name="filter">
-                <option value='None'>None</option>
-                {% for marker in user.markers.all %}
-                    <option value="{{ marker.id }}">{{ marker.name }}</option>
-                {% endfor %}
-            </select>
-            <input type = "submit" value="Filter">
-        </form>
-    </div>
+
     <div class="content">
 
         {% if not events %}

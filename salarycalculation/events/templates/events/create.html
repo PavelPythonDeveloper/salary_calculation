@@ -95,9 +95,8 @@
                         {{ form.price }}
                     </div>
                 </div>
-
-                <button class="form-submit" type="submit">{% trans "Update" %}</button> <button action="{% url 'events:events_list' %}">Cancel</button>
-            </form>
+                <button class="form-submit" type="submit">{% trans "Update" %}</button>
+                </form>
     {% else %}
             <form action="{% url 'events:create' %}" method="post" novalidate>
                 {% csrf_token %}
@@ -192,7 +191,7 @@
                             <span class="material-symbols-outlined">
                                 add_circle
                             </span>
-                            <div class "button-text">
+                            <div class="button-text">
                                 Create
                             </div>
                         </div>

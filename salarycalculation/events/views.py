@@ -21,10 +21,13 @@ def events_list(request, marker_id=None):
     page_range = paginator.page_range
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+    print('marker_id:', marker_id)
+    print('type:', type(marker_id))
     return render(request, 'events/list.html',
                   {'events': events,
                    'empty_event_list_msg': empty_event_list_msg,
                    'user_id': request.user.id,
+                   'marker_id': marker_id,
                    "page_obj": page_obj,
                    "page_range": page_range}
                   )

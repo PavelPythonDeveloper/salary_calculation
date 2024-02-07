@@ -1,6 +1,6 @@
  <div class="form-wrapper flex" style="width: 230px; align-items: center; height: 8px; background-color: #e5f2ff;" title="Filter your events">
 <!--     <div class="button-holder">-->
-        <form  action="{% url 'events:marker_filter' %}" method="post" novalidate>
+        <form  action="{% url 'markers:filter' %}" method="post" novalidate>
             {% csrf_token %}
             <select name="filter" style="border-width: 2px; border-radius: 5px; outline: none;">
                 <option value="None">None</option>

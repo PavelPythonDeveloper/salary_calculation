@@ -126,10 +126,3 @@ def update_event(request, id):
     form = CreateNewEventForm(data)
     return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action': 'update'})
 
-
-@login_required
-def marker_filter(request):
-    marker_id = request.POST.get('filter')
-    if marker_id == 'None':
-        return redirect('events:events_list')
-    return redirect('events:events_list', marker_id=marker_id)

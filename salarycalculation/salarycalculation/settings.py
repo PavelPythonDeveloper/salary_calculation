@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'home.apps.HomeConfig',
     'events.apps.EventsConfig',
+    'markers.apps.MarkersConfig',
     
     'django.contrib.admin',
     'django.contrib.auth',

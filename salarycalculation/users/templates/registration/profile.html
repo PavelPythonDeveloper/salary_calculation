@@ -6,6 +6,7 @@
     <div class='container'>
         <div class="wrapper">
             <div class="form-wrapper">
+                Profile
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">
@@ -57,13 +58,47 @@
                         </button>
                     </form>
                 </div>
-            <div>Your markers:</div>
-            <select name="markers">
-                {% for marker in request.user.markers.all %}
-                    <option>{{ marker.name }}</option>
-                {% endfor %}
-                </select>
+            <div class="button-holder" style="align-items: center;">
+                <div>
+                    <div><span class="material-symbols-outlined">
+push_pin
+</span>Your markers:</div>
+
+                    <select name="markers">
+                        {% for marker in request.user.markers.all %}
+                            <option>{{ marker.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <form>
+                    <button class='button submit' value="Change">Change</button>
+                </form>
+                <form>
+                    <button class='button submit' value="Add new">Add</button>
+                </form>
+                </div>
+
+
+                 <div>
+                    <div>Your events:</div>
+
+                    <select name="events">
+                        {% for event in request.user.events.all %}
+                            <option>{{ event.title }}  {{ event.date_of_the_event|date:'d.m.Y H:i' }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <form>
+                    <button class='button submit' value="Change">Change</button>
+                </form>
+                <form>
+                    <button class='button submit' value="Add new">Add</button>
+                </form>
+                </div>
+
+                </div>
             </div>
+
 
         </div>
     </div>

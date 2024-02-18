@@ -1,14 +1,13 @@
  <div class="form-wrapper flex" style="width: 230px; align-items: center; height: 8px; background-color: #e5f2ff;" title="Filter your events">
 <!--     <div class="button-holder">-->
-        <form  action="{% url 'markers:filter' %}" method="post" novalidate>
-            {% csrf_token %}
+        <form  action="{% url 'events:events_list' %}" method="GET">
             <select name="filter" style="border-width: 2px; border-radius: 5px; outline: none;">
                 <option value="None">None</option>
                 {% for marker in user.markers.all %}
                     {% if marker_id == marker.id %}
-                        <option value="{{ marker.id }}" selected>{{ marker.name }}</option>
+                        <option value="{{ marker.name }}" selected>{{ marker.name }}</option>
                     {% else %}
-                        <option value="{{ marker.id }}">{{ marker.name }}</option>
+                        <option value="{{ marker.name }}">{{ marker.name }}</option>
                     {% endif %}
                 {% endfor %}
             </select>

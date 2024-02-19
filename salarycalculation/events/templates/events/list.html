@@ -82,11 +82,8 @@
                 <span class="current">
                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                         {% for p in page_range %}
-                            {% if page_obj.number == p %}
-                                <a href="?page={{ p }}" style="font-weight: bold;">{{ p }}</a>
-                            {% else %}
-                                <a href="?page={{ p }}">{{ p }}</a>
-                            {% endif %}
+
+                                <a href="?page={{ p }}{% if request.GET.f %}&f={{ request.GET.f }}{% endif %}" {% if page_obj.number == p %}style="font-weight: bold;"{% endif %}>{{ p }}</a>
                         {% endfor %}
                 </span>
             </span>

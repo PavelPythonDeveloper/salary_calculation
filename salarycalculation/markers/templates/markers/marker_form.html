@@ -1,21 +1,25 @@
  <div class="form-wrapper flex" style="width: 230px; align-items: center; height: 8px; background-color: #e5f2ff;" title="Filter your events">
 <!--     <div class="button-holder">-->
         <form  action="{% url 'events:events_list' %}" method="GET">
-            <select name="filter" style="border-width: 2px; border-radius: 5px; outline: none;">
-                <option value="None">None</option>
+            <select name="f" style="border-width: 2px; border-radius: 5px; outline: none;">
+                <option value='Default'>Default</option>
                 {% for marker in user.markers.all %}
-                    {% if marker_id == marker.id %}
-                        <option value="{{ marker.name }}" selected>{{ marker.name }}</option>
-                    {% else %}
-                        <option value="{{ marker.name }}">{{ marker.name }}</option>
-                    {% endif %}
+                        <option value="{{ marker.name }}"
+                                {% if request.GET.f == marker.name %}
+                                selected
+                                {% endif %}>
+                            {{ marker.name }}
+                        </option>
                 {% endfor %}
             </select>
 <!--            <input type="submit" value="Filter">-->
             <button class="button submit" type="submit">filter</button>
         </form>
         <form action="{% url 'events:events_list' %}">
-            <button class="button submit">Reset</button>
+            {% if request.GET.page %}
+                <input type="hidden" name="page" value="{{ request.GET.page }}">
+            {% endif %}
+            <button type="submit" class="button submit">Reset</button>
         </form>
 <!--         </div>-->
     </div>

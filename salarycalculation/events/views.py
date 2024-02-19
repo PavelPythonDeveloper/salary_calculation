@@ -10,24 +10,22 @@ from django.utils.timezone import make_aware
 
 
 @login_required
-def events_list(request, marker_id=None):
-    if marker_id is None:
-        events = Event.objects.filter(creator=request.user)
+def events_list(request):
+    f = request.GET.get('f', None)
+    if f != 'Default' and f is not None:
+        events = Event.objects.filter(creator=request.user, markers__name=f)
     else:
-        events = Event.objects.filter(creator=request.user, markers__id=marker_id)
+        events = Event.objects.filter(creator=request.user)
 
     empty_event_list_msg = 'You have no event. Add one?'
-    paginator = Paginator(events, 10)
+    paginator = Paginator(events, 5)
     page_range = paginator.page_range
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    print('marker_id:', marker_id)
-    print('type:', type(marker_id))
     return render(request, 'events/list.html',
                   {'events': events,
                    'empty_event_list_msg': empty_event_list_msg,
                    'user_id': request.user.id,
-                   'marker_id': marker_id,
                    "page_obj": page_obj,
                    "page_range": page_range}
                   )
@@ -125,4 +123,3 @@ def update_event(request, id):
             'title': event.title}
     form = CreateNewEventForm(data)
     return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action': 'update'})
-

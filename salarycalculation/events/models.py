@@ -1,11 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from markers.models import Marker
 from django.utils import timezone
-
-
-class Marker(models.Model):
-    name = models.CharField(max_length=50)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='markers', default=None)
 
 
 class Event(models.Model):

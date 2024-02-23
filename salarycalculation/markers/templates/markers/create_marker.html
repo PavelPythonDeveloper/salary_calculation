@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+
+
+{% block title %}Create marker{% endblock %}
+
+{% block content %}
+<form action="{% url 'markers:create_marker' " method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

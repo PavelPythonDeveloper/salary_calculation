@@ -6,6 +6,7 @@ app_name = "markers"
 
 
 urlpatterns = [
-    path('filter/<int:marker_id>', views.marker_filter, name='filter'),
-    path('filter/', views.marker_filter, name='filter')
+    # path('create/', views.create_marker, name='create_marker'),
+    path('detail/<int:marker_id>/', views.markers_detail, name='markers_detail'),
+    path('list/', views.markers_list, name='markers_list'),
 ]

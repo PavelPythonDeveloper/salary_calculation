@@ -1,0 +1,29 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Markers{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        {% for marker in markers %}
+            <div class="event-item">
+                <div class="event-title">
+                    <span class="material-symbols-outlined">
+                        list_alt
+                    </span>
+
+                    {{ marker.name }}
+                </div>
+
+                <form action="{% url 'events:events_list' %}" >
+                    <input type="hidden" name="f" value="{{ marker.name }}">
+                    <button type="submit">Show related events</button>
+                </form>
+                <form action="{% url 'markers:markers_detail' marker.id %}" >
+                    <button type="submit">Change name</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

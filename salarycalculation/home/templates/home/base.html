@@ -27,7 +27,12 @@
                 <ul class="menu">
                     {% if 'events/list' in request.path %}
                         <li class="menu-item">
-                        {% include 'markers/marker_form.html' %}
+                            {% include 'markers/marker_form.html' %}
+                        </li>
+                    {% elif 'marker/list/' in request.path %}
+                        <li class="menu-item">
+
+                            {% include 'markers/marker_create_form.html' %}
                         </li>
                     {% endif %}
                     <li class="menu-item">

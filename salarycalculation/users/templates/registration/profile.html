@@ -6,6 +6,7 @@
     <div class='container'>
         <div class="wrapper">
             <div class="form-wrapper">
+                Profile
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">
@@ -14,7 +15,7 @@
                         <div class="label">Username</div>
                     </div>
                     <div class="form-control-field">
-                        <input id="id_username" type="text"  value={{ username }} disabled >
+                        <input id="id_username" type="text"  value='{{ username }}' disabled >
                     </div>
                    
                     <div class="form-control-label">
@@ -27,9 +28,6 @@
                         <input id="id_password" type="text"  value="*****" disabled >
                     </div>
                 </div>
-                
-                <div>Markers:</div>
-
 
                 <div class="button-holder">
                     <form action="{% url 'users:username_change' %}">
@@ -53,14 +51,24 @@
                                     settings
                                 </span>
                         
-                                <div class "button-text">
+                                <div class="button-text">
                                     Change password
                                 </div>
                             </div>
                         </button>
                     </form>
                 </div>
+
+            <form action="{% url 'markers:markers_list' %}">
+                <button type="submit">Markers</button>
+            </form>
+
+
+
+                </div>
             </div>
+
+
         </div>
     </div>
 {% endblock %}

@@ -39,13 +39,14 @@
                      </span>
                     {{ event.price }}<br>
                  </div>
-<!--                {{ event.markers.all }}-->
-                <select name="markers">
-                {% for marker in event.markers.all %}
-                    <option>{{ marker.name }}</option>
-<!--                    {{ marker.creator }}-->
-                {% endfor %}
-                </select>
+{% comment %}Display markers in event item{% endcomment %}
+                {% if event.markers.all %}
+                    <select name="markers">
+                        {% for marker in event.markers.all %}
+                        <option>{{ marker.name }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
                 <div class="button-holder">
                     <form action="{% url 'events:delete' event.id %}">
                     <button class="button remove" type="submit">
@@ -59,7 +60,6 @@
                         </div>
                     </button>
                 </form>
-                        {% comment %} <a href="{% url 'events:delete' event.id %}">Delete</a> {% endcomment %}
                     <form action="{% url 'events:update' event.id %}">
                     <button class="button submit">
                         <div class="button-inner">

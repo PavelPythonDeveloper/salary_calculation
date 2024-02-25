@@ -27,7 +27,6 @@ def markers_list(request):
             return redirect('markers:markers_list')
     form = CreateNewMarkerForm()
     if request.GET.get('for-event'):
-        print(request.GET.get('for-event'))
         event = Event.objects.get(id=request.GET.get('for-event'))
 
     markers = request.user.markers.all()
@@ -40,11 +39,13 @@ def add_marker_to_event(request, event_id):
     if request.method == 'POST':
         choices = request.POST.getlist('choice')
         event = Event.objects.get(id=event_id)
-        for choice in choices:
-            marker = Marker.objects.get(id=choice)
-            event.markers.add(marker)
+        for marker in request.user.markers.all():
+            if str(marker.id) not in choices:
+                event.markers.remove(marker)
+            else:
+                event.markers.add(marker)
+
         page = request.GET.get('event_page', 1)
-        f = request.GET.get('f', None)
         return HttpResponseRedirect(reverse('events:events_list') + f'?page={page}')
 
 

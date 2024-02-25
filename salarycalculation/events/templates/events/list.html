@@ -40,7 +40,7 @@
                     {{ event.price }}<br>
                  </div>
 
-                <a href="{% url 'markers:markers_list'  %}?for-event={{ event.id }}&event_page={{ request.GET.page }}">Add markers</a>
+                <a href="{% url 'markers:markers_list'  %}?for-event={{ event.id }}&event_page={{ request.GET.page }}&f={{ request.GET.f }}">Add markers</a>
 
                 <br>
 {% comment %}Display markers in event item{% endcomment %}

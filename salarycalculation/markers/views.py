@@ -44,7 +44,8 @@ def add_marker_to_event(request, event_id):
             marker = Marker.objects.get(id=choice)
             event.markers.add(marker)
         page = request.GET.get('event_page', 1)
-        return HttpResponseRedirect(reverse('events:events_list') + f'?page={page}')
+        f = request.GET.get('f')
+        return HttpResponseRedirect(reverse('events:events_list') + f'?page={page}&f={f}')
 
 
 @login_required

@@ -39,6 +39,10 @@
                      </span>
                     {{ event.price }}<br>
                  </div>
+
+                <a href="{% url 'markers:markers_list'  %}?for-event={{ event.id }}&event_page={{ request.GET.page }}">Add markers</a>
+
+                <br>
 {% comment %}Display markers in event item{% endcomment %}
                 {% if event.markers.all %}
                     <select name="markers">

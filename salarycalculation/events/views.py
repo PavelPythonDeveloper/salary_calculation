@@ -18,7 +18,7 @@ def events_list(request):
         events = Event.objects.filter(creator=request.user)
 
     empty_event_list_msg = 'You have no event. Add one?'
-    paginator = Paginator(events, 5)
+    paginator = Paginator(events, 8)
     page_range = paginator.page_range
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)

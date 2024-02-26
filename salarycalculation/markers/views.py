@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
+from django.shortcuts import redirect, render, HttpResponseRedirect, reverse, HttpResponse
 from .forms import CreateNewMarkerForm
 from django.contrib.auth.decorators import login_required
 from .models import Marker
@@ -49,6 +49,14 @@ def add_marker_to_event(request, event_id):
 
         page = request.GET.get('event_page', 1)
         return HttpResponseRedirect(reverse('events:events_list') + f'?page={page}')
+
+
+@login_required
+def remove_marker(request, marker_id):
+    if request.method == 'POST':
+        marker = Marker.objects.get(id=marker_id)
+        marker.delete()
+        return HttpResponse('marker removed!!!')
 
 
 @login_required

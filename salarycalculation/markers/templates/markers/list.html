@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <form action="{% url 'markers:add_marker_to_event' event_id=event.id %}?event_page={{ request.GET.event_page }}" id="marker-choice"  method="POST">
+    <form action="{% url 'markers:add_marker_to_event' event_id=event.id|default:'None' %}?event_page={{ request.GET.event_page }}" id="marker-choice"  method="POST">
         {% csrf_token %}
             <input type="submit" value="Add/remove">
         </form>

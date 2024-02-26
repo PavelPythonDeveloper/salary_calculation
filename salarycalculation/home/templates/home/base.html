@@ -31,8 +31,9 @@
                         </li>
                     {% elif 'marker/list/' in request.path %}
                         <li class="menu-item">
-
-                            {% include 'markers/marker_create_form.html' %}
+                            {% if not request.GET.for_event %}
+                                {% include 'markers/marker_create_form.html' %}
+                            {% endif %}
                         </li>
                     {% endif %}
                     <li class="menu-item">

@@ -4,15 +4,19 @@
 
 {% block content %}
 <div class="container">
+    {% if request.GET.for_event %}
     <form action="{% url 'markers:add_marker_to_event' event_id=event.id|default:'None' %}?event_page={{ request.GET.event_page }}" id="marker-choice"  method="POST">
         {% csrf_token %}
             <input type="submit" value="Add/remove">
         </form>
+    {% endif %}
     <div class="content">
         {% for marker in markers %}
 
             <div class="event-item">
+                {% if request.GET.for_event %}
                 <input form="marker-choice" value="{{ marker.id }}" type="checkbox" name="choice" {% if marker in event.markers.all %}checked{% endif %}>
+                {% endif %}
                 <div class="event-title">
                     <span class="material-symbols-outlined">
                         list_alt

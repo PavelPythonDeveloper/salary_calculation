@@ -20,13 +20,12 @@ from events.models import Event
 def markers_list(request):
     context = {}
     if request.method == 'POST':
-        if request.GET.get('for_event'):
-            form = CreateNewMarkerForm(request.POST)
-            if form.is_valid():
-                name = form.cleaned_data['name']
-                m = Marker(creator=request.user, name=name)
-                m.save()
-                return redirect('markers:markers_list')
+        form = CreateNewMarkerForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            m = Marker(creator=request.user, name=name)
+            m.save()
+            return redirect('markers:markers_list')
     form = CreateNewMarkerForm()
     if request.GET.get('for_event'):
         event = Event.objects.get(id=request.GET.get('for_event'))

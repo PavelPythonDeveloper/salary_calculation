@@ -69,9 +69,8 @@ def create_new_event(request):
             date_of_the_event = form.cleaned_data['date_of_the_event']
             time_of_the_event = form.cleaned_data['time_of_the_event']
 
-            date_time_of_the_event = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event),
-                                                timezone=request.session.get('django-timezone'))
-            print('datetime is aware', is_aware(date_time_of_the_event))
+            date_time_of_the_event = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event))
+
             price = form.cleaned_data['price']
             creator = request.user
             event = Event(title=title,
@@ -79,7 +78,7 @@ def create_new_event(request):
                           date_of_the_event=date_time_of_the_event,
                           price=price, creator=creator)
             event.save()
-            print('is aware!', is_aware(event.date_of_the_event))
+
             messages.success(request, "You have been created new event!")
             return redirect('events:events_list')
         return render(request, 'events/create.html', {'form': form})
@@ -110,19 +109,16 @@ def update_event(request, id):
             event.comment = form.cleaned_data['comment']
             event.price = form.cleaned_data['price']
             date_of_the_event = form.cleaned_data['date_of_the_event']
-            # print(is_aware(date_of_the_event))
             time_of_the_event = form.cleaned_data['time_of_the_event']
-            date_time = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event),
-                                   timezone=request.session.get('django_timezone'))
-            aware = date_time
-            event.date_of_the_event = aware
+            date_time = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event))
+            event.date_of_the_event = date_time
             event.save()
 
             messages.success(request, "You have been updated the event!")
 
             return redirect('events:events_list')
-    localdate = zoneinfo.ZoneInfo('Europe/Moscow')
-    datetimes = event.date_of_the_event.astimezone(localdate)
+    current_timezone = get_current_timezone()
+    datetimes = event.date_of_the_event.astimezone(current_timezone)
     date = datetimes.date()
     times = datetimes.time()
     data = {'date_of_the_event': date.strftime('%d.%m.%Y'),

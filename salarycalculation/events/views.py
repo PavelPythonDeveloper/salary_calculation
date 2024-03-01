@@ -122,8 +122,7 @@ def update_event(request, id):
 
             return redirect('events:events_list')
     localdate = zoneinfo.ZoneInfo('Europe/Moscow')
-    datetimes = event.date_of_the_event + datetime.timedelta(hours=3)
-    print('Current time zone:', get_current_timezone())
+    datetimes = event.date_of_the_event.astimezone(localdate)
     date = datetimes.date()
     times = datetimes.time()
     data = {'date_of_the_event': date.strftime('%d.%m.%Y'),

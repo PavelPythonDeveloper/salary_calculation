@@ -1,7 +1,5 @@
 {% extends 'home/base.html' %}
 
-{% load i18n %}
-
 {% block title %}Create{% endblock %}
 
 {% block content %}
@@ -95,7 +93,7 @@
                         {{ form.price }}
                     </div>
                 </div>
-                <button class="form-submit" type="submit">{% trans "Update" %}</button>
+                <button class="form-submit" type="submit">Update</button>
                 </form>
     {% else %}
             <form action="{% url 'events:create' %}" method="post" novalidate>

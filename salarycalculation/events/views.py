@@ -1,3 +1,5 @@
+import zoneinfo
+
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event, Marker
@@ -6,7 +8,7 @@ from .forms import CalculateSumForm, CreateNewEventForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 import datetime
-from django.utils.timezone import make_aware
+from django.utils.timezone import make_aware, tzinfo, is_aware, is_naive, utc, get_current_timezone
 
 
 @login_required
@@ -66,7 +68,10 @@ def create_new_event(request):
             comment = form.cleaned_data['comment']
             date_of_the_event = form.cleaned_data['date_of_the_event']
             time_of_the_event = form.cleaned_data['time_of_the_event']
-            date_time_of_the_event = datetime.datetime.combine(date_of_the_event, time_of_the_event)
+
+            date_time_of_the_event = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event),
+                                                timezone=request.session.get('django-timezone'))
+            print('datetime is aware', is_aware(date_time_of_the_event))
             price = form.cleaned_data['price']
             creator = request.user
             event = Event(title=title,
@@ -74,6 +79,7 @@ def create_new_event(request):
                           date_of_the_event=date_time_of_the_event,
                           price=price, creator=creator)
             event.save()
+            print('is aware!', is_aware(event.date_of_the_event))
             messages.success(request, "You have been created new event!")
             return redirect('events:events_list')
         return render(request, 'events/create.html', {'form': form})
@@ -104,18 +110,22 @@ def update_event(request, id):
             event.comment = form.cleaned_data['comment']
             event.price = form.cleaned_data['price']
             date_of_the_event = form.cleaned_data['date_of_the_event']
+            # print(is_aware(date_of_the_event))
             time_of_the_event = form.cleaned_data['time_of_the_event']
-            date_time = datetime.datetime.combine(date_of_the_event, time_of_the_event)
-            aware = make_aware(date_time, timezone=request.session.get("django_timezone"))
+            date_time = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event),
+                                   timezone=request.session.get('django_timezone'))
+            aware = date_time
             event.date_of_the_event = aware
             event.save()
 
             messages.success(request, "You have been updated the event!")
 
             return redirect('events:events_list')
-
-    date = event.date_of_the_event.date()
-    times = event.date_of_the_event.time()
+    localdate = zoneinfo.ZoneInfo('Europe/Moscow')
+    datetimes = event.date_of_the_event + datetime.timedelta(hours=3)
+    print('Current time zone:', get_current_timezone())
+    date = datetimes.date()
+    times = datetimes.time()
     data = {'date_of_the_event': date.strftime('%d.%m.%Y'),
             'time_of_the_event': times.strftime('%H:%M'),
             'price': event.price,

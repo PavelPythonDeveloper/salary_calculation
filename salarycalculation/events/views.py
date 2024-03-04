@@ -1,14 +1,14 @@
 import zoneinfo
 
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from .models import Event, Marker
 from django.contrib.auth.decorators import login_required
 from .forms import CalculateSumForm, CreateNewEventForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 import datetime
-from django.utils.timezone import make_aware, tzinfo, is_aware, is_naive, utc, get_current_timezone
+from django.utils.timezone import make_aware, get_current_timezone
 
 
 @login_required

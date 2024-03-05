@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -37,19 +39,19 @@
                         </li>
                     {% endif %}
                     <li class="menu-item">
-                        <a class="menu-link" href="{% url 'events:events_list' %}">Events list</a>
+                        <a class="menu-link" href="{% url 'events:events_list' %}">{% translate "Events list" %}</a>
                     </li>
 
                     <li class="menu-item">
-                        <a class="menu-link" href="{% url 'events:calculate' %}">Calculate Sum</a>
+                        <a class="menu-link" href="{% url 'events:calculate' %}">{% translate "Calculate Sum" %}</a>
                     </li>
 
                     <li class="menu-item">
-                        <a class="menu-link" href="{% url 'events:create' %}">Create new event</a>
+                        <a class="menu-link" href="{% url 'events:create' %}">{% translate "Create new event" %}</a>
                     </li>
 
                     <li class="menu-item">
-                        <a class="menu-link" href="{% url 'users:logout' %}">Logout</a>
+                        <a class="menu-link" href="{% url 'users:logout' %}">{% translate "Logout" %}</a>
                     </li>
                 </ul>
                 

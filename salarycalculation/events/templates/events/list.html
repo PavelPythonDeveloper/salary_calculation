@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %}
-
+{% load i18n %}
 {% block title %}Event list{% endblock %}
 
 {% block content %}
@@ -40,7 +40,7 @@
                     {{ event.price }}<br>
                  </div>
 
-                <a href="{% url 'markers:markers_list'  %}?for_event={{ event.id }}&event_page={{ request.GET.page }}">Add markers</a>
+                <a href="{% url 'markers:markers_list'  %}?for_event={{ event.id }}&event_page={{ request.GET.page }}">{% translate "Add markers" %}</a>
 
                 <br>
 {% comment %}Display markers in event item{% endcomment %}
@@ -59,7 +59,7 @@
                                 delete
                             </span>
                             <div class="button-text">
-                                Remove
+                                {% translate "Remove" %}
                             </div>
                         </div>
                     </button>
@@ -71,7 +71,7 @@
                                 update
                             </span>
                             <div class="button-text">
-                                Update
+                                {% translate "Update" %}
                             </div>
                         </div>
                     </button>   

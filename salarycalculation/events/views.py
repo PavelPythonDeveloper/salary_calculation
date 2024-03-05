@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 import datetime
 from django.utils.timezone import make_aware, get_current_timezone
+from django.utils.translation import gettext as _
 
 
 @login_required
@@ -54,7 +55,7 @@ def calculate(request):
                 return render(request, 'events/calculate.html', {'amount': amount,
                                                                  'start': start,
                                                                  'end': end, 'form': form})
-            return HttpResponse('You have no events in this period')
+            return HttpResponse(_('You have no events in this period'))
     form = CalculateSumForm()
     return render(request, 'events/calculate.html', {'form': form})
 
@@ -79,7 +80,7 @@ def create_new_event(request):
                           price=price, creator=creator)
             event.save()
 
-            messages.success(request, "You have been created new event!")
+            messages.success(request, _("You have been created new event!"))
             return redirect('events:events_list')
         return render(request, 'events/create.html', {'form': form})
 
@@ -92,7 +93,7 @@ def delete_event(request, id):
     event = get_object_or_404(Event, id=id)
     if request.method == 'POST':
         event.delete()
-        messages.success(request, "You have been deleted the event!")
+        messages.success(request, _("You have been deleted the event!"))
         return redirect('events:events_list')
     return render(request, 'events/delete_confirmation.html', {'event_id': event.id})
 
@@ -114,7 +115,7 @@ def update_event(request, id):
             event.date_of_the_event = date_time
             event.save()
 
-            messages.success(request, "You have been updated the event!")
+            messages.success(request, _("You have been updated the event!"))
 
             return redirect('events:events_list')
     current_timezone = get_current_timezone()

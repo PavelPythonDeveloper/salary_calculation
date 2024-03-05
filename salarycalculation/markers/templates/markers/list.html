@@ -36,9 +36,6 @@
                     <input type="hidden" name="f" value="{{ marker.name }}">
                     <button type="submit">Show related events</button>
                 </form>
-                <form action="{% url 'markers:markers_detail' marker.id %}" >
-                    <button type="submit">Change name</button>
-                </form>
             </div>
         {% endfor %}
     </div>

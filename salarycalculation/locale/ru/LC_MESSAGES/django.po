@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-05 01:00+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\events\templates\events\list.html:43
+msgid "Add markers"
+msgstr "Добавить маркеры"
+
+#: .\events\templates\events\list.html:63
+msgid "Remove"
+msgstr "Удалить"
+
+#: .\events\templates\events\list.html:75
+msgid "Update"
+msgstr "Обновить"
+
+#: .\events\views.py:58
+msgid "You have no events in this period"
+msgstr "что-то"
+
+#: .\events\views.py:83
+msgid "You have been created new event!"
+msgstr "Вы создали новое событие"
+
+#: .\events\views.py:96
+msgid "You have been deleted the event!"
+msgstr "перец"
+
+#: .\events\views.py:118
+msgid "You have been updated the event!"
+msgstr "соль"
+
+#: .\home\templates\home\base.html:42
+msgid "Events list"
+msgstr "Список событий"
+
+#: .\home\templates\home\base.html:46
+msgid "Calculate Sum"
+msgstr "Посчитать сумму"
+
+#: .\home\templates\home\base.html:50
+msgid "Create new event"
+msgstr "Создать новое событие"
+
+#: .\home\templates\home\base.html:54
+msgid "Logout"
+msgstr "Выйти"
+
+#: .\markers\templates\markers\marker_form.html:7
+msgid "Default"
+msgstr "Не выбрано"
+
+#: .\markers\views.py:21
+msgid "You have benn successfully added marker"
+msgstr "мы"
+
+#: .\markers\views.py:44
+#, python-format
+msgid "You have been successfully changed the markers of event %(names)s"
+msgstr "Вы успешно изменили маркеры для события %(names)s"
+
+#: .\markers\views.py:56
+msgid "You have been successfully removed marker"
+msgstr "гора"

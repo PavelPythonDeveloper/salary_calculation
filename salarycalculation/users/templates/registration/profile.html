@@ -1,5 +1,7 @@
 {% extends "home/base.html" %}
 
+{% load i18n %}
+
 {% block title %}Profile{% endblock %}
 
 {% block content %}
@@ -37,8 +39,8 @@
                                     manage_accounts
                                 </span>
                         
-                                <div class "button-text">
-                                    Change username
+                                <div class="button-text">
+                                    {% translate "Change username" %}
                                 </div>
                             </div>
                         </button>
@@ -52,7 +54,7 @@
                                 </span>
                         
                                 <div class="button-text">
-                                    Change password
+                                    {% translate "Change password" %}
                                 </div>
                             </div>
                         </button>
@@ -60,7 +62,7 @@
                 </div>
 
             <form action="{% url 'markers:markers_list' %}">
-                <button type="submit">Markers</button>
+                <button type="submit">{% translate "Markers" %}</button>
             </form>
 
 

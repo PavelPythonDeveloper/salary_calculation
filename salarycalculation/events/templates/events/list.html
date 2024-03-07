@@ -15,9 +15,11 @@
         {% for event in page_obj %}
             <div class="event-item">
                 {% if event.in_future %}
-                    <span>Future</span>
-                {% else %}
-                    <span>Past</span>
+                    <span>{% translate "Future event" %}</span>
+                {% elif event.in_past %}
+                    <span>{% translate "Past event" %}</span>
+                {% elif event.today %}
+                    <span>{% translate "Today event" %}</span>
                 {% endif %}
                 <div class="event-title">
                         <span class="material-symbols-outlined">
@@ -84,7 +86,7 @@
         <div class="pagination">
             <span class="step-links">
                 <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    {% translate "Page" %}{{ page_obj.number }} {% translate "of" %}{{ page_obj.paginator.num_pages }}.
                         {% for p in page_range %}
 
                                 <a href="?page={{ p }}{% if request.GET.f %}&f={{ request.GET.f }}{% endif %}" {% if page_obj.number == p %}style="font-weight: bold;"{% endif %}>{{ p }}</a>

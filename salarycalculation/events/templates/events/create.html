@@ -1,13 +1,14 @@
 {% extends 'home/base.html' %}
 
+{% load i18n %}
+
 {% block title %}Create{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="wrapper">
         <div class="form-wrapper">
-            {% if action == 'update' %}
-                <form action="{% url 'events:update' id=id %}" method="post" novalidate>
+            <form {% if action_flag %} action="{% url 'events:update' id=id %}" {% else %} action="{% url 'events:create' %}"{% endif %} method="post" novalidate>
                 {% csrf_token %}
                 <div class="form-control">
                     <div class="form-control-label">
@@ -93,111 +94,20 @@
                         {{ form.price }}
                     </div>
                 </div>
-                <button class="form-submit" type="submit">Update</button>
-                </form>
-    {% else %}
-            <form action="{% url 'events:create' %}" method="post" novalidate>
-                {% csrf_token %}
-                <div class="form-control">
-                    <div class="form-control-label">
-                        <span class="material-symbols-outlined">
-                            list_alt
-                        </span>
-                        <div class="label">
-                            {{ form.title.label }}
-                        </div>
-                    </div>
-                    <div class="field-error">
-                        {{ form.title.errors }}
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.title }}
-                    </div>
-                </div>
-
-                <div class="form-control">
-                    <div class="form-control-label">
-                        <span class="material-symbols-outlined">
-                            calendar_month
-                        </span>
-                        <div class="label">
-                            {{ form.date_of_the_event.label }}
-                        </div>
-
-                    </div>
-                     <div class="field-error">
-                        {{ form.title.errors }}
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.date_of_the_event }}
-                    </div>
-                </div>
-
-                <div class="form-control">
-                    <div class="form-control-label">
-                        <span class="material-symbols-outlined">
-                            schedule
-                        </span>
-                        <div class="label">
-                            {{ form.time_of_the_event.label }}
-                        </div>
-                    </div>
-                     <div class="field-error">
-                        {{ form.title.errors }}
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.time_of_the_event }}
-                    </div>
-                </div>
-
-                <div class="form-control">
-                    <div class="form-control-label">
-                        <span class="material-symbols-outlined">
-                            comment
-                        </span>
-                        <div class="label">
-                            {{ form.comment.label }}
-                        </div>
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.comment }}
-                    </div>
-                </div>
-
-                <div class="form-control">
-                    <div class="form-control-label">
-                        <span class="material-symbols-outlined">
-                            <span class="material-symbols-outlined">
-                                request_quote
-                            </span>
-                        </span>
-                        <div class="label">
-                            {{ form.price.label }}
-                        </div>
-                    </div>
-                     <div class="field-error">
-                        {{ form.title.errors }}
-                    </div>
-                    <div class="form-control-field">
-                        {{ form.price }}
-                    </div>
-                </div>
-
-                <div class="button-holder">
+                                <div class="button-holder">
                     <button class="button submit" type="submit">
                         <div class="button-inner">
                             <span class="material-symbols-outlined">
                                 add_circle
                             </span>
                             <div class="button-text">
-                                Create
+                                {% if action_flag %}{% translate "Update" %}{% else %}{% translate "Create" %}{% endif %}
                             </div>
                         </div>
                     </button>
                 </div>
             </form>
 
-    {% endif %}
             </div>
         </div>
 </div>

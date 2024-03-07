@@ -1,5 +1,6 @@
 {% extends 'home/base.html' %}
 
+{% load i18n %}
 
 {% block title %}Create marker{% endblock %}
 
@@ -7,6 +8,6 @@
 <form action="{% url 'markers:create_marker' " method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <button type="submit">{% translate "Create" %}</button>
 </form>
 {% endblock %}

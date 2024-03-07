@@ -1,14 +1,16 @@
 {% extends 'home/base.html' %}
 
+{% load i18n %}
+
 {% block title %} Delete confirm {% endblock %}
 
 {% block content %}
-    <h2>Are you sure you want to delete the event?</h2>
+    <h2>{% translate "Are you sure you want to delete the event?" %}</h2>
         <form method="POST">
             {% csrf_token %}
             {{ form }}
 
-            <input type="submit" value="Yes"> <a href="{% url 'events:events_list' %}">No</a>
+            <input type="submit" value='{% translate "Yes" %}'> <a href="{% url 'events:events_list' %}">{% translate 'No' %}</a>
 
         </form>
 {% endblock %}

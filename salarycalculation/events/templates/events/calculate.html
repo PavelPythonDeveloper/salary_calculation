@@ -1,12 +1,12 @@
 {% extends 'home/base.html' %}
-
+{% load i18n %}
 {% block title %}Calculate{% endblock %}
 
 {% block content %}
 <div class="container">
      <div class="wrapper">
         <div class="form-wrapper">
-            <form action="{% url 'events:calculate' %}" method="post">
+            <form action="{% url 'events:calculate' %}" method="post" novalidate>
                 {% csrf_token %}
                 <div class="form-control">
                     <div class="form-control-label">
@@ -83,8 +83,8 @@
                                 add_circle
                             </span>
                         
-                            <div class "button-text">
-                                Calculate
+                            <div class="button-text">
+                                {% translate "Calculate" %}
                             </div>
                         </div>
                     </button>
@@ -94,8 +94,8 @@
                                 cancel
                             </span>
                         
-                            <div class "button-text">
-                                Cancel
+                            <div class="button-text">
+                                {% translate "Cancel" %}
                             </div>
                         </div>
                     </button>
@@ -105,7 +105,7 @@
         </div>
      </div>
     {% if amount %}
-        <p>From {{ start|date:'d.m.Y H:i' }} to {{ end|date:'d.m.Y H:i' }} your earnings is {{ amount }}</p>
+        <p>{% translate "From" %}{{ start|date:'d.m.Y H:i' }} {% translate "to" %}{{ end|date:'d.m.Y H:i' }} {% translate "your earnings is" %}{{ amount }}</p>
     {% endif %}
 </div>
 

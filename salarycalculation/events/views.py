@@ -128,4 +128,4 @@ def update_event(request, id):
             'comment': event.comment,
             'title': event.title}
     form = CreateNewEventForm(data)
-    return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action': 'update'})
+    return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action_flag': 'update'})

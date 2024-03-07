@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+
+{% load i18n %}
+
 {% load static %}
+
 {% block title %}Logged out!{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="wrapper">
         <div>
-            <h1>Logged out!</h1>
-            <h4>You have been successfully logged out.
-            You can <a href="{% url 'users:login' %}">log-in again</a></h4>
+            <h1>{% translate "Logged out!" %}</h1>
+            <h4>{% translate "You have been successfully logged out. You can" %}<a href="{% url 'users:login' %}">{% translate "log-in again" %}</a></h4>
             <div class="logout-img-wrapper">
                 <img class="logout-img" src="{% static 'logout-frog.jpg' %}" alt="logout-image">
             </div>

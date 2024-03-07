@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Done!{% endblock %}
+{% load i18n %}
+
+{% block title %}{% translate "Done!" %}{% endblock %}
 
 {% block content %}
 
-Hello {{ new_user.username }}
-You are successfully registered!!!
-<a href="{% url 'users:login'  %}">Enter</a>
+{% translate "Hello" %}, {{ new_user.username }}
+{% translate "You are successfully registered!!!" %}
+<a href="{% url 'users:login'  %}">{% translate "Log-in" %}</a>
 
 {% endblock %}

@@ -1,7 +1,6 @@
 {% load i18n %}
 
-<div class="form-wrapper flex" style="width: 230px; align-items: center; height: 8px; background-color: #e5f2ff;" title="Filter your events">
-<!--     <div class="button-holder">-->
+<div class="marker-form-wrapper flex" style=" align-items: center; height: 8px; background-color: #e5f2ff;" title="Filter your events">
         <form  action="{% url 'events:events_list' %}" method="GET">
             <select name="f" style="border-width: 2px; border-radius: 5px; outline: none;">
                 <option value='Default'>{% translate "Default" %}</option>
@@ -14,14 +13,12 @@
                         </option>
                 {% endfor %}
             </select>
-<!--            <input type="submit" value="Filter">-->
-            <button class="button submit" type="submit">filter</button>
+            <button class="button submit" type="submit">{% translate "filter" %}</button>
         </form>
         <form action="{% url 'events:events_list' %}">
             {% if request.GET.page %}
                 <input type="hidden" name="page" value="{{ request.GET.page }}">
             {% endif %}
-            <button type="submit" class="button submit">Reset</button>
+            <button type="submit" class="button submit">{% translate "Reset" %}</button>
         </form>
-<!--         </div>-->
     </div>

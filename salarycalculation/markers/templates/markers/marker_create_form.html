@@ -1,9 +1,11 @@
-<div class="form-wrapper flex" style=" width: 260px; align-items: center; height: 15px; background-color: #e5f2ff;" title="Create the new marker">
+{% load i18n %}
+
+<div class="form-wrapper flex" style=" width: 276px; align-items: center; height: 15px; background-color: #e5f2ff;" title="Create the new marker">
 
         <form action="{% url 'markers:markers_list' %}" method='POST' >
             {% csrf_token %}
             {{ form.name }}
 
-          <button class='button submit' type="submit">Create</button>
+          <button class='button submit' type="submit">{% translate "Create" %}</button>
     </form>
 </div>

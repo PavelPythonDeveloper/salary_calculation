@@ -53,5 +53,5 @@ def remove_marker(request, marker_id):
     if request.method == 'POST':
         marker = Marker.objects.get(id=marker_id)
         marker.delete()
-        messages.success(request, _("You have been successfully removed marker"))
+        messages.success(request, _("You have been successfully removed marker %(name)s") % {"name": marker.name})
         return HttpResponseRedirect(reverse('markers:markers_list'))

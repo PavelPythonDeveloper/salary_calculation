@@ -1,5 +1,7 @@
 {% extends 'home/base.html' %}
 
+{% load i18n %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %}
@@ -11,7 +13,7 @@
                 {% csrf_token %}
                 {% if form.errors %}
                 <div class="errorlist">
-                <p>Your username and password didn't match. Please try again.</p>
+                <p>{% translate "Your username and password didn't match. Please try again." %}</p>
                 </div>
             {% endif %}
                     <div class="form-control">
@@ -56,7 +58,7 @@
                                 </span>
         
                                 <div class ="button-text">
-                                    log-in
+                                    {% translate "log-in" %}
                                 </div>
                             </div>
                         </button>

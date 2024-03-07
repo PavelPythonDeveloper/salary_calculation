@@ -1,5 +1,7 @@
 {% extends 'home/base.html' %}
 
+{% load i18n %}
+
 {% block title %}Markers{% endblock %}
 
 {% block content %}
@@ -29,13 +31,15 @@
                 {% if not request.GET.for_event %}
                     <form action="{% url 'markers:remove' marker_id=marker.id %}" method="post">
                         {% csrf_token %}
-                       <button type="submit">Remove</button>
+                       <button type="submit">{% translate "Remove" %}</button>
+                    </form>
+
+                     <form action="{% url 'markers:remove' marker_id=marker.id %}" method="post">
+                        {% csrf_token %}
+                       <button type="submit">{% translate "Rename" %}</button>
                     </form>
                 {% endif %}
-                <form action="{% url 'events:events_list' %}" >
-                    <input type="hidden" name="f" value="{{ marker.name }}">
-                    <button type="submit">Show related events</button>
-                </form>
+
             </div>
         {% endfor %}
     </div>

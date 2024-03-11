@@ -6,7 +6,7 @@
 <div class="container">
      <div class="wrapper">
         <div class="form-wrapper">
-            <form action="{% url 'events:calculate' %}" method="post" novalidate>
+            <form id="creation_form" action="{% url 'events:calculate' %}" method="post" novalidate>
                 {% csrf_token %}
                 <div class="form-control">
                     <div class="form-control-label">
@@ -75,33 +75,21 @@
                         {{ form.end_time }}
                     </div>
                 </div>
-
-                <div class="button-holder">
-                    <button class="button submit" type="submit">
+    </form>
+            <div class="button-holder">
+                    <button form="creation_form" class="button submit" type="submit">
                         <div class="button-inner">
                             <span class="material-symbols-outlined">
                                 add_circle
                             </span>
-                        
+
                             <div class="button-text">
                                 {% translate "Calculate" %}
                             </div>
                         </div>
                     </button>
-                    <button class="button cancel" type="submit">
-                        <div class="button-inner">
-                            <span class="material-symbols-outlined">
-                                cancel
-                            </span>
-                        
-                            <div class="button-text">
-                                {% translate "Cancel" %}
-                            </div>
-                        </div>
-                    </button>
                 </div>
 
-    </form>
         </div>
      </div>
     {% if amount %}

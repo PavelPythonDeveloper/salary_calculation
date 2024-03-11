@@ -16,7 +16,7 @@ class Event(models.Model):
     markers = models.ManyToManyField(Marker)
 
     def in_future(self):
-        if self.date_of_the_event > timezone.now() and self.date_of_the_event > timezone.now() + timezone.timedelta(1):
+        if self.date_of_the_event > timezone.now() + timezone.timedelta(1):
             print(timezone.now())
             return True
         return False
@@ -27,7 +27,7 @@ class Event(models.Model):
         return False
 
     def today(self):
-        if self.date_of_the_event > timezone.now() and self.date_of_the_event < timezone.now() + timezone.timedelta(1):
+        if timezone.now() < self.date_of_the_event < timezone.now() + timezone.timedelta(1):
             return True
         return False
 

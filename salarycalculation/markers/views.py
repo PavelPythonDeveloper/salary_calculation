@@ -10,7 +10,7 @@ from django.utils.translation import activate
 
 @login_required
 def markers_list(request):
-    activate('ru')
+    activate('en')
     context = {}
     if request.method == 'POST':
         form = CreateNewMarkerForm(request.POST)

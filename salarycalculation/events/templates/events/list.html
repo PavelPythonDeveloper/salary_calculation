@@ -9,17 +9,18 @@
 
         {% if not events %}
             <div class="empty-message">
-                {{ empty_event_list_msg }}<a href="{% url 'events:create' %}">Add</a>
+                You have no events. Add one?<a href="{% url 'events:create' %}">Add</a>
             </div>
         {% endif %}
         {% for event in page_obj %}
-            <div class="event-item">
+            <div class="event-item" >
                 {% if event.in_future %}
-                    <span>{% translate "Future event" %}</span>
+
+                    <span style="color: green;">{% translate "Future event" %}</span>
                 {% elif event.in_past %}
-                    <span>{% translate "Past event" %}</span>
+                    <span style="color: grey;">{% translate "Past event" %}</span>
                 {% elif event.today %}
-                    <span>{% translate "Today event" %}</span>
+                    <span style="color: red;">{% translate "Today event" %}</span>
                 {% endif %}
                 <div class="event-title">
                         <span class="material-symbols-outlined">
@@ -83,16 +84,18 @@
         {% endfor %}
     </div>
     {% if events %}
+    <div class="pagination-wrapper">
         <div class="pagination">
             <span class="step-links">
                 <span class="current">
                     {% translate "Page" %}{{ page_obj.number }} {% translate "of" %}{{ page_obj.paginator.num_pages }}.
                         {% for p in page_range %}
 
-                                <a href="?page={{ p }}{% if request.GET.f %}&f={{ request.GET.f }}{% endif %}" {% if page_obj.number == p %}style="font-weight: bold;"{% endif %}>{{ p }}</a>
+                                <a href="?page={{ p }}{% if request.GET.f %}&f={{ request.GET.f }}{% endif %}" {% if page_obj.number == p %} style="font-weight: bold;"{% endif %}>{{ p }}</a>
                         {% endfor %}
                 </span>
             </span>
+        </div>
         </div>
 </div>
 {% endif %}

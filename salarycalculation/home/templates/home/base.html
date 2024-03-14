@@ -17,7 +17,7 @@
 <body>
 
 
-    {% if request.user.is_authenticated %}
+
     <header class="header">
         <div class="container">
             <nav class="nav">
@@ -55,22 +55,22 @@
                         <a class="menu-link" href="{% url 'users:logout' %}">{% translate "Logout" %}</a>
                     </li>
                 </ul>
-
+<!--                <div class="form-wrapper" style="min-width: 147px;">-->
                 <form action="{% url 'set_language' %}" method="post" onchange="submit();">{% csrf_token %}
-    <input name="next" type="hidden" value="{{'/'}}">
-    <select name="language">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %}
-            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                {{ language.name_local }} ({{ language.code }})
-            </option>
-        {% endfor %}
-    </select>
-                    
-</form>
+                    <input name="next" type="hidden" value="{{ request.path }}">
+                    <select name="language">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
 
+                </form>
+<!--                </div>-->
                 <a class="menu-link" href="{% url 'users:profile' %}">
                     <span class="material-symbols-outlined">
                         manage_accounts
@@ -78,7 +78,7 @@
             </nav>
         </div>
     </header>
-    {% endif %}
+
     <div class="container">
         {% if messages %}
         <div id="message" class="messages-holder">

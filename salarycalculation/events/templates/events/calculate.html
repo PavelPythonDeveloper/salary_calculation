@@ -93,7 +93,11 @@
         </div>
      </div>
     {% if amount %}
-        <p>{% translate "From" %}{{ start|date:'d.m.Y H:i' }} {% translate "to" %}{{ end|date:'d.m.Y H:i' }} {% translate "your earnings is" %}{{ amount }}</p>
+    <div class="wrapper">
+        <div class="form-wrapper">
+        <p>{% translate "From" %} {{ start|date:'d.m.Y H:i' }} {% translate "to" %} {{ end|date:'d.m.Y H:i' }} {% translate "your earnings is" %} {{ amount }}</p>
+            </div>
+        </div>
     {% endif %}
 </div>
 

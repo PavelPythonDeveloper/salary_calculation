@@ -1,19 +1,87 @@
-{% extends 'base.html' %}
+{% extends 'home/base.html' %}
 
 {% load i18n %}
 
 {% block title %}Registration{% endblock %}
 
 {% block content %}
+<div class="conteiner">
+    <div class="wrapper">
+    <div class="form-wrapper">
 <form method="POST" novalidate>
     {% csrf_token %}
-    {% for field in form %}
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}<br>
-    {% endfor %}
 
-    <button type="submit">{% translate "Registration" %}</button>
+    <div class="form-control">
+        <div class="form-control-label">
+            <span class="material-symbols-outlined">
+                 list_alt
+            </span>
+            <div class="label">
+                {{ form.username.label }}
+            </div>
+        </div>
+        <div class="field-error">
+        {{ form.username.errors }}
+        </div>
+        <div class="form-control-field">
+         {{ form.username }}
+        </div>
+    </div>
+        <div class="form-control">
+            <div class="form-control-label">
+                <span class="material-symbols-outlined">
+                    lock
+                </span>
+                <div class="label">
+                    {{ form.password1.label }}
+                </div>
+            </div>
 
-    {% translate "Already have an account?" %} <a href="{% url 'users:login' %}">{% translate "Log-in" %}</a>
+                <div class="field-error">
+                    {{ form.password1.errors }}
+                </div>
+                <div class="form-control-field">
+                    {{ form.password1 }}
+                </div>
+
+        </div>
+
+        <div class="form-control">
+            <div class="form-control-label">
+                <span class="material-symbols-outlined">
+                    lock
+                </span>
+                <div class="label">
+                    {{ form.password2.label }}
+                </div>
+            </div>
+
+                <div class="field-error">
+                    {{ form.password2.errors }}
+                </div>
+                <div class="form-control-field">
+                    {{ form.password2 }}
+                </div>
+
+        </div>
+
+
+
+  <div class="button-holder">
+                    <button class="button submit" type="submit">
+                        <div class="button-inner">
+                            <span class="material-symbols-outlined">
+                                add_circle
+                            </span>
+                            <div class="button-text">
+                                {% translate "Registration" %}
+                            </div>
+                        </div>
+                    </button>
+                </div>
+    {% translate "Already have an account?" %} <a href="{% url 'users:login' %}" style="color: green;">{% translate "Log-in" %}</a>
 </form>
+        </div>
+        </div>
+</div>
 {% endblock %}

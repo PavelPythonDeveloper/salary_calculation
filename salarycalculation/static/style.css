@@ -40,11 +40,6 @@ ul {
 
 }
 
-/* .logo-img{
-    max-width: 100%;
-    max-height: 100%;
-} */
-
 .logo-holder{
     max-width: 40px;
     max-height: 40px;
@@ -61,7 +56,7 @@ ul {
 }
 
 .menu-item {
-    padding-right: 30px;
+    padding-right: 20px;
 }
 
 .menu-link {
@@ -213,6 +208,8 @@ ul {
 #id_price,
 #id_username,
 #id_password,
+#id_password1,
+#id_password2,
 #id_start_date,
 #id_start_time,
 #id_end_date,
@@ -241,6 +238,8 @@ ul {
 #id_price:hover,
 #id_username:hover,
 #id_password:hover,
+#id_password1:hover,
+#id_password2:hover,
 #id_start_date:hover,
 #id_start_time:hover,
 #id_end_date:hover,
@@ -380,4 +379,15 @@ ul {
 
 .empty-message{
     padding: auto;
+}
+
+select {
+    border-width: 2px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.centered{
+    margin-right: auto;
+    margin-left: auto;
 }

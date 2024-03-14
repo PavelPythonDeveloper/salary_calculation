@@ -17,7 +17,6 @@ class Event(models.Model):
 
     def in_future(self):
         if self.date_of_the_event > timezone.now() + timezone.timedelta(1):
-            print(timezone.now())
             return True
         return False
 

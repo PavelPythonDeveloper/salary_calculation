@@ -6,12 +6,62 @@ from .forms import CalculateSumForm, CreateNewEventForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 import datetime
+import calendar
 from django.utils.timezone import make_aware, get_current_timezone
+from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.utils.safestring import mark_safe
+
+January = 1
+
+
+class CustomHTMLCal(calendar.HTMLCalendar):
+    def formatday(self, day, weekday):
+        """
+        Return a day as a table cell.
+        """
+        if day == 0:
+            # day outside month
+            return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
+        else:
+            return '<td class="%s"><div style="border: solid; border-width: 2px; margin: 5px;">%d</div></td>' % (
+                self.cssclasses[weekday], day)
+
+    def formatyear(self, theyear=timezone.now().year, width=3):
+        """
+        Return a formatted year as a table of tables.
+        """
+        v = []
+        a = v.append
+        width = max(width, 1)
+        a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' %
+          self.cssclass_year)
+        a('\n')
+        a('<tr><th colspan="%d" class="%s">%s</th></tr>' % (
+            width, self.cssclass_year_head, theyear))
+        for i in range(January, January + 12, width):
+            # months in this row
+            months = range(i, min(i + width, 13))
+            a('<tr>')
+            for m in months:
+                a('<td>')
+                a(self.formatmonth(theyear, m, withyear=False))
+                a('</td>')
+            a('</tr>')
+        a('</table>')
+        return ''.join(v)
 
 
 @login_required
 def events_list(request):
+    clndr = CustomHTMLCal(firstweekday=0)
+    year = request.GET.get('year', None)
+    if year:
+        c = mark_safe(clndr.formatyear(int(year)))
+    else:
+        c = mark_safe(clndr.formatyear())
+
+    return render(request, 'events/calendar.html', {"c": c})
     f = request.GET.get('f', None)
     if f != 'Default' and f is not None:
         events = Event.objects.filter(creator=request.user, markers__name=f)
@@ -26,7 +76,8 @@ def events_list(request):
                   {'events': events,
                    'user_id': request.user.id,
                    "page_obj": page_obj,
-                   "page_range": page_range}
+                   "page_range": page_range,
+                   "cln": cln}
                   )
 
 

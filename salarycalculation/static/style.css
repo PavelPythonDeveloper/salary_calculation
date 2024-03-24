@@ -245,6 +245,7 @@ ul {
 #id_end_date:hover,
 #id_end_time:hover,
 .event-item:hover ,
+.month:hover,
 .form-wrapper:hover,
 .event-title:hover,
 .event-date:hover,
@@ -286,6 +287,8 @@ ul {
     color: #4d4d4d;
     background-color: #ffffff;
 }
+
+.month,
 .form-wrapper{
     padding: 15px;
     min-width: 270px;
@@ -395,4 +398,9 @@ select {
 .year{
     margin-left: auto;
     margin-right: auto;
+}
+
+.sat,
+.sun{
+    background-color: red;
 }

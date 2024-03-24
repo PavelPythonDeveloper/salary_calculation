@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 import datetime
 import calendar
+from calendar import month_name
 from django.utils.timezone import make_aware, get_current_timezone
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -16,36 +17,82 @@ January = 1
 
 
 class CustomHTMLCal(calendar.HTMLCalendar):
-    def formatday(self, day, weekday):
+
+    # CSS class for the month's head
+    cssclass_month_head = "month-head"
+
+    # CSS class for the month
+    cssclass_month = "month"
+
+    def formatday(self, day, weekday, events=None):
         """
         Return a day as a table cell.
         """
+        events = events.filter(date_of_the_event__day=day)
         if day == 0:
             # day outside month
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
-            return '<td class="%s"><div style="border: solid; border-width: 2px; margin: 5px;">%d</div></td>' % (
-                self.cssclasses[weekday], day)
+            if events:
+                return '<td class="%s"><div style="margin: 10px;"><a href="/events/list/?day=">%d</a></div></td>' % (
+                    self.cssclasses[weekday], day)
+            else:
+                return '<td class="%s"><div style="margin: 10px;">%d</div></td>' % (
+                    self.cssclasses[weekday], day)
 
-    def formatyear(self, theyear=timezone.now().year, width=3):
+    def formatweek(self, theweek, events=None):
+        """
+        Return a complete week as a table row.
+        """
+        s = ''.join(self.formatday(d, wd, events=events) for (d, wd) in theweek)
+        return '<tr>%s</tr>' % s
+
+    def formatmonth(self, theyear, themonth, withyear=True, events=None):
+        """
+        Return a formatted month as a table.
+        """
+        events = events.filter(date_of_the_event__month=themonth)
+        v = []
+        a = v.append
+        a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' % (
+            self.cssclass_month))
+        a('\n')
+        a(self.formatmonthname(theyear, themonth, withyear=withyear))
+        a('\n')
+        a(self.formatweekheader())
+        a('\n')
+        for week in self.monthdays2calendar(theyear, themonth):
+            a(self.formatweek(week, events=events))
+            a('\n')
+        a('</table>')
+        a('\n')
+        return ''.join(v)
+
+    def formatyear(self, theyear=timezone.now().year, width=3, events=None):
         """
         Return a formatted year as a table of tables.
         """
+        previous_year = theyear - 1
+        next_year = theyear + 1
+        action = "<form action='/events/list/'"
+        method = "method='get'><input name='year' value='%s' type='submit'><input name='year' value='%s' type='submit'></form>"
+        print(action)
+        form = action + method % (previous_year, next_year)
         v = []
         a = v.append
         width = max(width, 1)
         a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' %
           self.cssclass_year)
         a('\n')
-        a('<tr><th colspan="%d" class="%s">%s</th></tr>' % (
-            width, self.cssclass_year_head, theyear))
+        a('<tr><th colspan="%d" class="%s">%s %s</th></tr>' % (
+            width, self.cssclass_year_head, theyear, form))
         for i in range(January, January + 12, width):
             # months in this row
             months = range(i, min(i + width, 13))
             a('<tr>')
             for m in months:
                 a('<td>')
-                a(self.formatmonth(theyear, m, withyear=False))
+                a(self.formatmonth(theyear, m, withyear=False, events=events))
                 a('</td>')
             a('</tr>')
         a('</table>')
@@ -54,12 +101,18 @@ class CustomHTMLCal(calendar.HTMLCalendar):
 
 @login_required
 def events_list(request):
+    user = request.user
+
     clndr = CustomHTMLCal(firstweekday=0)
     year = request.GET.get('year', None)
+    month = request.GET.get('month', None)
+
+    events = Event.objects.filter(creator=user, date_of_the_event__year=year)
+
     if year:
-        c = mark_safe(clndr.formatyear(int(year)))
+        c = mark_safe(clndr.formatyear(int(year), events=events))
     else:
-        c = mark_safe(clndr.formatyear())
+        c = mark_safe(clndr.formatyear(timezone.now().year, events=events))
 
     return render(request, 'events/calendar.html', {"c": c})
     f = request.GET.get('f', None)

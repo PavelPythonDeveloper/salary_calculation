@@ -24,7 +24,7 @@ class CustomHTMLCal(calendar.HTMLCalendar):
     # CSS class for the month
     cssclass_month = "month"
 
-    def formatday(self, day, weekday, events=None):
+    def formatday(self, day, weekday, theyear, themonth, events=None):
         """
         Return a day as a table cell.
         """
@@ -34,17 +34,17 @@ class CustomHTMLCal(calendar.HTMLCalendar):
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
             if events:
-                return '<td class="%s"><div style="margin: 10px;"><a href="/events/list/?day=">%d</a></div></td>' % (
-                    self.cssclasses[weekday], day)
+                return '<td class="%s"><div style="margin: 10px;"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
+                    self.cssclasses[weekday], theyear, themonth, day, day)
             else:
                 return '<td class="%s"><div style="margin: 10px;">%d</div></td>' % (
                     self.cssclasses[weekday], day)
 
-    def formatweek(self, theweek, events=None):
+    def formatweek(self, theweek, theyear, themonth, events=None):
         """
         Return a complete week as a table row.
         """
-        s = ''.join(self.formatday(d, wd, events=events) for (d, wd) in theweek)
+        s = ''.join(self.formatday(d, wd, theyear, themonth, events=events) for (d, wd) in theweek)
         return '<tr>%s</tr>' % s
 
     def formatmonth(self, theyear, themonth, withyear=True, events=None):
@@ -62,7 +62,7 @@ class CustomHTMLCal(calendar.HTMLCalendar):
         a(self.formatweekheader())
         a('\n')
         for week in self.monthdays2calendar(theyear, themonth):
-            a(self.formatweek(week, events=events))
+            a(self.formatweek(week, theyear, themonth, events=events))
             a('\n')
         a('</table>')
         a('\n')
@@ -105,14 +105,21 @@ def events_list(request):
 
     clndr = CustomHTMLCal(firstweekday=0)
     year = request.GET.get('year', None)
-    month = request.GET.get('month', None)
-
+    theyear = request.GET.get('year', None)
+    themonth = request.GET.get('month', None)
+    theday = request.GET.get('day', None)
+    if theday and themonth and theyear:
+        thedate = datetime.date(year=int(theyear), month=int(themonth), day=int(theday))
+        print(thedate)
+        events = Event.objects.filter(creator=user, date_of_the_event=thedate)
+        print(events)
     events = Event.objects.filter(creator=user, date_of_the_event__year=year)
 
     if year:
         c = mark_safe(clndr.formatyear(int(year), events=events))
     else:
         c = mark_safe(clndr.formatyear(timezone.now().year, events=events))
+
 
     return render(request, 'events/calendar.html', {"c": c})
     f = request.GET.get('f', None)

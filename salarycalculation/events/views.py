@@ -14,32 +14,44 @@ from django.utils.safestring import mark_safe
 
 
 @login_required
-def events_list(request):
+def events_calendar(request):
     user = request.user
 
     clndr = custom_calendar.CustomHTMLCal(firstweekday=0)
-    year = request.GET.get('year', None)
     theyear = request.GET.get('year', None)
     themonth = request.GET.get('month', None)
     theday = request.GET.get('day', None)
     if theday and themonth and theyear:
+        print('day month year')
         thedate = datetime.date(year=int(theyear), month=int(themonth), day=int(theday))
-        print(thedate)
         events = Event.objects.filter(creator=user, date_of_the_event=thedate)
-        print(events)
-    events = Event.objects.filter(creator=user, date_of_the_event__year=year)
 
-    if year:
-        c = mark_safe(clndr.formatyear(int(year), events=events))
+    elif theyear:
+        
+        events = Event.objects.filter(creator=user, date_of_the_event__year=int(theyear))
+        c = mark_safe(clndr.formatyear(int(theyear), events=events))
+
     else:
+        events = Event.objects.filter(creator=user, date_of_the_event__year=timezone.now().year)
         c = mark_safe(clndr.formatyear(timezone.now().year, events=events))
 
     return render(request, 'events/calendar.html', {"c": c})
-    f = request.GET.get('f', None)
-    if f != 'Default' and f is not None:
-        events = Event.objects.filter(creator=request.user, markers__name=f)
+
+
+@login_required
+def events_list(request):
+    calendar_year = request.GET.get('year', None)
+    calendar_month = request.GET.get('month', None)
+    calendar_day = request.GET.get('day', None)
+    if calendar_year and calendar_month and calendar_day:
+        d = datetime.date(year=int(calendar_year), month=int(calendar_month), day=int(calendar_day))
+        events = Event.objects.filter(creator=request.user, date_of_the_event__date=d)
     else:
-        events = Event.objects.filter(creator=request.user)
+        f = request.GET.get('f', None)
+        if f != 'Default' and f is not None:
+            events = Event.objects.filter(creator=request.user, markers__name=f)
+        else:
+            events = Event.objects.filter(creator=request.user)
 
     paginator = Paginator(events, 8)
     page_range = paginator.page_range
@@ -50,7 +62,7 @@ def events_list(request):
                    'user_id': request.user.id,
                    "page_obj": page_obj,
                    "page_range": page_range,
-                   "cln": cln}
+                   }
                   )
 
 

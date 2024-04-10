@@ -21,7 +21,7 @@ class CustomHTMLCal(calendar.HTMLCalendar):
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
             if events:
-                return '<td class="%s"><div style="margin: 10px; background-color: blue;"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
+                return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
                     self.cssclasses[weekday], theyear, themonth, day, day)
             else:
                 return '<td class="%s"><div style="margin: 10px;">%d</div></td>' % (
@@ -63,7 +63,6 @@ class CustomHTMLCal(calendar.HTMLCalendar):
         next_year = theyear + 1
         action = "<form action='/events/calendar/'"
         method = "method='get'><input name='year' value='%s' type='submit'><input name='year' value='%s' type='submit'></form>"
-        print(action)
         form = action + method % (previous_year, next_year)
         v = []
         a = v.append

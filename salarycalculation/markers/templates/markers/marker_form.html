@@ -13,6 +13,11 @@
                         </option>
                 {% endfor %}
             </select>
+            {% if request.GET.year and request.GET.month and request.GET.day %}
+                <input type="hidden" name="year" value="{{ request.GET.year }}">
+                <input type="hidden" name="month" value="{{ request.GET.month }}">
+                <input type="hidden" name="day" value="{{ request.GET.day }}">
+            {% endif %}
             <button class="button submit" type="submit">{% translate "filter" %}</button>
         </form>
         <form action="{% url 'events:events_list' %}">

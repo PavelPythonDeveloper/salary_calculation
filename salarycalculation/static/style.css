@@ -268,6 +268,7 @@ ul {
 #id_end_time:hover,
 .event-item:hover ,
 .month:hover,
+.current-month:hover,
 .form-wrapper:hover,
 .event-title:hover,
 .event-date:hover,
@@ -310,6 +311,7 @@ ul {
     background-color: #ffffff;
 }
 
+.current-month,
 .month,
 .form-wrapper{
     padding: 15px;
@@ -326,6 +328,12 @@ ul {
     background-color: #ffffff;
     margin-left: 20px;
     margin-bottom: 20px;
+
+}
+
+.current-month{
+
+    background-color: #b6f1fc;
 
 }
 
@@ -347,6 +355,7 @@ ul {
     align-items: center;
 }
 
+
 .button{
     border: solid;
     border-width: 2px;
@@ -357,6 +366,10 @@ ul {
     box-shadow: 0px 0px 10px -1px rgba(0, 20, 36, 0.47);
 }
 
+.year-head{
+    border: solid;
+    border-radius: 3px;
+}
 .submit{
     color: green;
 }
@@ -426,6 +439,8 @@ select {
     margin-right: auto;
 }
 
+
+
 .sat,
 .sun{
     background-color: #fa6746;
@@ -437,4 +452,11 @@ select {
     border-radius: 3px;
      border-width: 2px;
      border-color: blue;
+}
+
+.today{
+    border: solid;
+    border-width: 2px;
+    border-radius: 13px;
+    border-color: green;
 }

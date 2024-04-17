@@ -3,7 +3,7 @@
 {% block title %}Event list{% endblock %}
 
 {% block content %}
-<a href="{% url 'events:events_calendar' %}">Calendar</a>
+<a href="{% url 'events:events_calendar' %}?year={% now 'Y' %}">Calendar</a>
 <div class="container">
 
     <div class="content">

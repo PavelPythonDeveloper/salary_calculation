@@ -16,24 +16,20 @@ from django.utils.safestring import mark_safe
 @login_required
 def events_calendar(request):
     user = request.user
-
     clndr = custom_calendar.CustomHTMLCal(firstweekday=0)
     theyear = request.GET.get('year', None)
-    themonth = request.GET.get('month', None)
-    theday = request.GET.get('day', None)
-    if theday and themonth and theyear:
-        print('day month year')
-        thedate = datetime.date(year=int(theyear), month=int(themonth), day=int(theday))
-        events = Event.objects.filter(creator=user, date_of_the_event=thedate)
-
-    elif theyear:
-        events = Event.objects.filter(creator=user, date_of_the_event__year=int(theyear))
+    if theyear:
+        f = request.GET.get('f', None)
+        if not f or f == 'Default':
+            events = Event.objects.filter(creator=user, date_of_the_event__year=int(theyear))
+        elif f != 'Default':
+            events = Event.objects.filter(creator=user, date_of_the_event__year=int(theyear), markers__name=f)
         c = mark_safe(clndr.formatyear(int(theyear), events=events))
-
+        print('2')
     else:
         events = Event.objects.filter(creator=user, date_of_the_event__year=timezone.now().year)
         c = mark_safe(clndr.formatyear(timezone.now().year, events=events))
-
+        print('3')
     return render(request, 'events/calendar.html', {"c": c})
 
 

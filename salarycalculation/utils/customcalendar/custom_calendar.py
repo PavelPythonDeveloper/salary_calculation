@@ -11,6 +11,11 @@ class CustomHTMLCal(calendar.HTMLCalendar):
     # CSS class for the month
     cssclass_month = "month"
 
+    # CSS class for current month
+    cssclass_current_month = "current-month"
+
+    cssclass_year_head = "year-head"
+
     def formatday(self, day, weekday, theyear, themonth, events=None):
         """
         Return a day as a table cell.

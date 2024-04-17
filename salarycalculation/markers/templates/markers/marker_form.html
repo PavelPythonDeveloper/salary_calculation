@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="marker-form-wrapper flex" style=" align-items: center; height: 8px; background-color: #e5f2ff;" title="Filter your events">
-        <form  action="{% url 'events:events_list' %}" method="GET">
+        <form  {% if 'events/list' in request.path %}action="{% url 'events:events_list' %}"{% elif 'events/event_calendar' in request.path %}action="{% url 'events:event_calendar' %}{% endif %} method="GET">
             <select name="f" style="border-width: 2px; border-radius: 5px; outline: none;">
                 <option value='Default'>{% translate "Default" %}</option>
                 {% for marker in user.markers.all %}
@@ -13,16 +13,31 @@
                         </option>
                 {% endfor %}
             </select>
-            {% if request.GET.year and request.GET.month and request.GET.day %}
+
+            {% if request.GET.year %}
                 <input type="hidden" name="year" value="{{ request.GET.year }}">
+            {% endif %}
+            {% if request.GET.month %}
                 <input type="hidden" name="month" value="{{ request.GET.month }}">
+            {% endif %}
+            {% if request.GET.day %}
                 <input type="hidden" name="day" value="{{ request.GET.day }}">
             {% endif %}
+
             <button class="button submit" type="submit">{% translate "filter" %}</button>
         </form>
-        <form action="{% url 'events:events_list' %}">
+        <form {% if 'events/list' in request.path %} action="{% url 'events:events_list' %}"{% elif 'events/calendar' in request.path %} action="{% url 'events:events_calendar' %}{% endif %} method='GET'>
             {% if request.GET.page %}
                 <input type="hidden" name="page" value="{{ request.GET.page }}">
+            {% endif %}
+            {% if request.GET.year %}
+                <input type="hidden" name="year" value="{{ request.GET.year }}">
+            {% endif %}
+            {% if request.GET.month %}
+                <input type="hidden" name="month" value="{{ request.GET.month }}">
+            {% endif %}
+            {% if request.GET.day %}
+                <input type="hidden" name="day" value="{{ request.GET.day }}">
             {% endif %}
             <button type="submit" class="button submit">{% translate "Reset" %}</button>
         </form>

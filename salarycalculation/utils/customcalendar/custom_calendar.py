@@ -26,9 +26,15 @@ class CustomHTMLCal(calendar.HTMLCalendar):
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
             if events:
+                if theyear == timezone.now().year and  themonth == timezone.now().month and day == timezone.now().day:
+                    return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s"><div class="today" >%d</div></a></div></td>' % (
+                        self.cssclasses[weekday], theyear, themonth, day, day)
                 return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
                     self.cssclasses[weekday], theyear, themonth, day, day)
             else:
+                if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
+                    return '<td class="%s"><div style="margin: 10px;"><div class="today">%d</div></div></td>' % (
+                        self.cssclasses[weekday], day)
                 return '<td class="%s"><div style="margin: 10px;">%d</div></td>' % (
                     self.cssclasses[weekday], day)
 
@@ -46,8 +52,12 @@ class CustomHTMLCal(calendar.HTMLCalendar):
         events = events.filter(date_of_the_event__month=themonth)
         v = []
         a = v.append
-        a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' % (
-            self.cssclass_month))
+        if themonth == timezone.now().month and theyear == timezone.now().year:
+            a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' % (
+                self.cssclass_current_month))
+        else:
+            a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' % (
+                self.cssclass_month))
         a('\n')
         a(self.formatmonthname(theyear, themonth, withyear=withyear))
         a('\n')
@@ -66,17 +76,18 @@ class CustomHTMLCal(calendar.HTMLCalendar):
         """
         previous_year = theyear - 1
         next_year = theyear + 1
-        action = "<form action='/events/calendar/'"
-        method = "method='get'><input name='year' value='%s' type='submit'><input name='year' value='%s' type='submit'></form>"
-        form = action + method % (previous_year, next_year)
+        form = "<form id='year-switch' action='/events/calendar/' method='get'></form>"
+        previous = "<input form='year-switch' class='button' name='year' value='%s' type='submit'>" % (previous_year)
+        next = "<input form='year-switch' class='button' name='year' value='%s' type='submit'>" % (next_year)
+
         v = []
         a = v.append
         width = max(width, 1)
         a('<table border="0" cellpadding="0" cellspacing="0" class="%s">' %
           self.cssclass_year)
         a('\n')
-        a('<tr><th colspan="%d" class="%s">%s %s</th></tr>' % (
-            width, self.cssclass_year_head, theyear, form))
+        a('<tr><th colspan="%d" class="" >%s<div style="display: flex; justify-content: center; margin: 30px 0 30px 0;">%s <div class="button">%s</div> %s</div></th></tr>' % (
+            width, form, previous, theyear, next))
         for i in range(January, January + 12, width):
             # months in this row
             months = range(i, min(i + width, 13))

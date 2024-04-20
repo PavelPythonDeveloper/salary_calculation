@@ -114,8 +114,16 @@ def create_new_event(request):
             messages.success(request, _("You have been created new event!"))
             return redirect('events:events_list')
         return render(request, 'events/create.html', {'form': form})
+    event_date={}
+    if request.GET.get('year', None) and request.GET.get('month', None) and request.GET.get('day', None):
+        event_date = datetime.date(year=int(request.GET.get('year')), month=int(request.GET.get('month')),
+                                   day=int(request.GET.get('day')))
 
-    form = CreateNewEventForm()
+        print('event date', event_date)
+    if event_date:
+        form = CreateNewEventForm(initial={'date_of_the_event': event_date})
+    else:
+        form = CreateNewEventForm()
     return render(request, 'events/create.html', {'form': form})
 
 

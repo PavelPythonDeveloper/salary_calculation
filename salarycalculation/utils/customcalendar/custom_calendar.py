@@ -14,23 +14,30 @@ class CustomHTMLCal(calendar.HTMLCalendar):
     # CSS class for current month
     cssclass_current_month = "current-month"
 
+    # CSS class for year head
     cssclass_year_head = "year-head"
+
+    # CSS class for a day that has events
+    cssclass_day_has_events = 'day-has-events'
 
     def formatday(self, day, weekday, theyear, themonth, events=None):
         """
         Return a day as a table cell.
         """
         events = events.filter(date_of_the_event__day=day)
+
         if day == 0:
             # day outside month
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
             if events:
+                # for e in events:
+                #     print(e.get_absolute_url())
                 if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
-                    return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s"><div class="today" >%d</div></a></div></td>' % (
-                        self.cssclasses[weekday], theyear, themonth, day, day)
-                return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
-                    self.cssclasses[weekday], theyear, themonth, day, day)
+                    return '<td class="%s"><div class="%s"><a href="/events/list/?year=%s&month=%s&day=%s"><div class="today" >%d</div></a></div></td>' % (
+                        self.cssclasses[weekday], self.cssclass_day_has_events, theyear, themonth, day, day)
+                return '<td class="%s"><div class="%s"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
+                    self.cssclasses[weekday], self.cssclass_day_has_events, theyear, themonth, day, day)
             else:
                 if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
                     return '<td class="%s"><div style="margin: 10px;"><div class="today"><a href="/events/create/?year=%s&month=%s&day=%s" >%d</a></div></div></td>' % (

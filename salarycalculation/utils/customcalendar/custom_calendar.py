@@ -26,17 +26,17 @@ class CustomHTMLCal(calendar.HTMLCalendar):
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
             if events:
-                if theyear == timezone.now().year and  themonth == timezone.now().month and day == timezone.now().day:
+                if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
                     return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s"><div class="today" >%d</div></a></div></td>' % (
                         self.cssclasses[weekday], theyear, themonth, day, day)
                 return '<td class="%s"><div class="event-calendar-item"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
                     self.cssclasses[weekday], theyear, themonth, day, day)
             else:
                 if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
-                    return '<td class="%s"><div style="margin: 10px;"><div class="today">%d</div></div></td>' % (
-                        self.cssclasses[weekday], day)
-                return '<td class="%s"><div style="margin: 10px;">%d</div></td>' % (
-                    self.cssclasses[weekday], day)
+                    return '<td class="%s"><div style="margin: 10px;"><div class="today"><a href="/events/create/?year=%s&month=%s&day=%s" >%d</a></div></div></td>' % (
+                        self.cssclasses[weekday], theyear, themonth, day, day)
+                return '<td class="%s"><div style="margin: 10px;"><a href="/events/create/?year=%s&month=%s&day=%s" >%d</a></div></td>' % (
+                    self.cssclasses[weekday], theyear, themonth, day, day)
 
     def formatweek(self, theweek, theyear, themonth, events=None):
         """

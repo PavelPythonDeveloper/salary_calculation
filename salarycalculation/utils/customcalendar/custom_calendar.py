@@ -20,6 +20,15 @@ class CustomHTMLCal(calendar.HTMLCalendar):
     # CSS class for a day that has events
     cssclass_day_has_events = 'day-has-events'
 
+    # CSS class for a day than doesn't have events
+    cssclass_day_does_not_have_events = "day-does-not-have-events"
+
+    # CSS class for today
+    cssclass_today = "today"
+
+    # CSS class for not today
+    cssclass_not_today = "not-today"
+
     def formatday(self, day, weekday, theyear, themonth, events=None):
         """
         Return a day as a table cell.
@@ -34,16 +43,16 @@ class CustomHTMLCal(calendar.HTMLCalendar):
                 # for e in events:
                 #     print(e.get_absolute_url())
                 if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
-                    return '<td class="%s"><div class="%s"><a href="/events/list/?year=%s&month=%s&day=%s"><div class="today" >%d</div></a></div></td>' % (
-                        self.cssclasses[weekday], self.cssclass_day_has_events, theyear, themonth, day, day)
-                return '<td class="%s"><div class="%s"><a href="/events/list/?year=%s&month=%s&day=%s">%d</a></div></td>' % (
-                    self.cssclasses[weekday], self.cssclass_day_has_events, theyear, themonth, day, day)
+                    return '<td class="%s"><a class="%s %s"  href="/events/list/?year=%s&month=%s&day=%s">%d</a></td>' % (
+                        self.cssclasses[weekday], self.cssclass_today, self.cssclass_day_has_events, theyear, themonth, day, day)
+                return '<td class="%s"><a class="%s %s" href="/events/list/?year=%s&month=%s&day=%s">%d</a></td>' % (
+                    self.cssclasses[weekday], self.cssclass_not_today, self.cssclass_day_has_events, theyear, themonth, day, day)
             else:
                 if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
-                    return '<td class="%s"><div style="margin: 10px;"><div class="today"><a href="/events/create/?year=%s&month=%s&day=%s" >%d</a></div></div></td>' % (
-                        self.cssclasses[weekday], theyear, themonth, day, day)
-                return '<td class="%s"><div style="margin: 10px;"><a href="/events/create/?year=%s&month=%s&day=%s" >%d</a></div></td>' % (
-                    self.cssclasses[weekday], theyear, themonth, day, day)
+                    return '<td class="%s"><a class="%s %s" href="/events/create/?year=%s&month=%s&day=%s">%d</a></td>' % (
+                        self.cssclasses[weekday], self.cssclass_today, self.cssclass_day_does_not_have_events, theyear, themonth, day, day)
+                return '<td class="%s"><a class="%s %s" href="/events/create/?year=%s&month=%s&day=%s" >%d</a></td>' % (
+                    self.cssclasses[weekday], self.cssclass_not_today, self.cssclass_day_does_not_have_events, theyear, themonth, day, day)
 
     def formatweek(self, theweek, theyear, themonth, events=None):
         """
@@ -81,6 +90,9 @@ class CustomHTMLCal(calendar.HTMLCalendar):
         """
         Return a formatted year as a table of tables.
         """
+        from django.urls import reverse
+        print(reverse('events:events_list'))
+        print(reverse('events:create'))
         previous_year = theyear - 1
         next_year = theyear + 1
         form = "<form id='year-switch' action='/events/calendar/' method='get'></form>"

@@ -26,11 +26,9 @@ def events_calendar(request):
         elif f != 'Default':
             events = Event.objects.filter(creator=user, date_of_the_event__year=int(theyear), markers__name=f)
         c = mark_safe(clndr.formatyear(int(theyear), events=events))
-        print('2')
     else:
         events = Event.objects.filter(creator=user, date_of_the_event__year=timezone.now().year)
         c = mark_safe(clndr.formatyear(timezone.now().year, events=events))
-        print('3')
     return render(request, 'events/calendar.html', {"c": c})
 
 
@@ -120,7 +118,6 @@ def create_new_event(request):
         event_date = datetime.date(year=int(request.GET.get('year')), month=int(request.GET.get('month')),
                                    day=int(request.GET.get('day')))
 
-        print('event date', event_date)
     if event_date:
         form = CreateNewEventForm(initial={'date_of_the_event': event_date})
     else:

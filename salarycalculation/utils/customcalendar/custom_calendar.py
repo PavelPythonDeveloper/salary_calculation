@@ -1,10 +1,11 @@
 from django.utils import timezone
 import calendar
 
+
 January = 1
 
 
-class CustomHTMLCal(calendar.HTMLCalendar):
+class CustomHTMLCal(calendar.LocaleHTMLCalendar):
     # CSS class for the month's head
     cssclass_month_head = "month-head"
 

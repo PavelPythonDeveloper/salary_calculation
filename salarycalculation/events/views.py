@@ -1,3 +1,4 @@
+import django.conf
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Event, Marker
@@ -9,14 +10,14 @@ import datetime
 from utils.customcalendar import custom_calendar
 from django.utils.timezone import make_aware, get_current_timezone
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _ , get_language
 from django.utils.safestring import mark_safe
 
 
 @login_required
 def events_calendar(request):
     user = request.user
-    clndr = custom_calendar.CustomHTMLCal(firstweekday=0)
+    clndr = custom_calendar.CustomHTMLCal(firstweekday=0, locale=get_language())
     theyear = request.GET.get('year', None)
     if theyear:
         f = request.GET.get('f', None)
@@ -114,7 +115,7 @@ def create_new_event(request):
             messages.success(request, _("You have been created new event!"))
             return redirect('events:events_list')
         return render(request, 'events/create.html', {'form': form})
-    event_date={}
+    event_date = {}
     if request.GET.get('year', None) and request.GET.get('month', None) and request.GET.get('day', None):
         event_date = datetime.date(year=int(request.GET.get('year')), month=int(request.GET.get('month')),
                                    day=int(request.GET.get('day')))

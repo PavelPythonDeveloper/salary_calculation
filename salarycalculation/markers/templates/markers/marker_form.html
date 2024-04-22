@@ -26,7 +26,7 @@
 
             <button class="button submit" type="submit">{% translate "filter" %}</button>
         </form>
-        <form {% if 'events/list' in request.path %} action="{% url 'events:events_list' %}"{% elif 'events/calendar' in request.path %} action="{% url 'events:events_calendar' %}{% endif %} method='GET'>
+        <form {% if 'events/list' in request.path %} action="{% url 'events:events_list' %}"{% elif 'events/calendar' in request.path %} action="{% url 'events:events_calendar' %}"{% endif %} method='GET'>
             {% if request.GET.page %}
                 <input type="hidden" name="page" value="{{ request.GET.page }}">
             {% endif %}

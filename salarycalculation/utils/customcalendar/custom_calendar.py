@@ -40,20 +40,17 @@ class CustomHTMLCal(calendar.LocaleHTMLCalendar):
             # day outside month
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
-            if events:
-                # for e in events:
-                #     print(e.get_absolute_url())
-                if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
-                    return '<td class="%s"><a class="%s %s"  href="/events/list/?year=%s&month=%s&day=%s">%d</a></td>' % (
-                        self.cssclasses[weekday], self.cssclass_today, self.cssclass_day_has_events, theyear, themonth, day, day)
-                return '<td class="%s"><a class="%s %s" href="/events/list/?year=%s&month=%s&day=%s">%d</a></td>' % (
-                    self.cssclasses[weekday], self.cssclass_not_today, self.cssclass_day_has_events, theyear, themonth, day, day)
-            else:
-                if theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day:
-                    return '<td class="%s"><a class="%s %s" href="/events/create/?year=%s&month=%s&day=%s">%d</a></td>' % (
-                        self.cssclasses[weekday], self.cssclass_today, self.cssclass_day_does_not_have_events, theyear, themonth, day, day)
-                return '<td class="%s"><a class="%s %s" href="/events/create/?year=%s&month=%s&day=%s" >%d</a></td>' % (
-                    self.cssclasses[weekday], self.cssclass_not_today, self.cssclass_day_does_not_have_events, theyear, themonth, day, day)
+            today = theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day
+
+            return '<td class="%s"><a class="%s %s"  href="%s?year=%s&month=%s&day=%s">%d</a></td>' % (
+                self.cssclasses[weekday],
+                (self.cssclass_not_today, self.cssclass_today)[today],
+                (self.cssclass_day_does_not_have_events, self.cssclass_day_has_events)[bool(events)],
+                ('/events/create/', '/events/list/')[bool(events)],
+                theyear,
+                themonth,
+                day,
+                day)
 
     def formatweek(self, theweek, theyear, themonth, events=None):
         """

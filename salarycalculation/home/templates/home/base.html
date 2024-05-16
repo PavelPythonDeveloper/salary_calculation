@@ -55,7 +55,7 @@
                     </li>
 
                     <li class="menu-item">
-                        <a class="menu-link" href="{% url 'events:create' %}">{% translate "Create new event" %}</a>
+                        <a class="menu-link" href="{% url 'events:create' %}{% if request.GET.year and request.GET.month and request.GET.day %}?year={{ request.GET.year }}&month={{ request.GET.month }}&day={{ request.GET.day }}{% endif %}">{% translate "Create new event" %}</a>
                     </li>
 
                     <li class="menu-item">

@@ -94,6 +94,10 @@
                         {{ form.price }}
                     </div>
                 </div>
+                {{ form.paid.errors }}
+                 <div class="form-control">
+                    {{ form.paid }} {{ form.paid.label }}
+                </div>
                                 <div class="button-holder">
                     <button class="button submit" type="submit">
                         <div class="button-inner">

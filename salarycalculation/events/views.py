@@ -77,7 +77,7 @@ def calculate(request):
 
             start = datetime.datetime.combine(start_date, start_time)
             end = datetime.datetime.combine(end_date, end_time)
-            events = Event.objects.filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
+            events = Event.objects.filter(creator=request.user).filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
             if events:
                 amount = 0
                 for event in events:
@@ -103,11 +103,13 @@ def create_new_event(request):
             date_time_of_the_event = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event))
 
             price = form.cleaned_data['price']
+            paid = form.cleaned_data['paid']
+            print('paid:', paid)
             creator = request.user
             event = Event(title=title,
                           comment=comment,
                           date_of_the_event=date_time_of_the_event,
-                          price=price, creator=creator)
+                          price=price, creator=creator, paid=paid)
             event.save()
 
             messages.success(request, _("You have been created new event!"))
@@ -141,8 +143,10 @@ def update_event(request, id):
     if event.creator != request.user:
         return HttpResponse("You can't see it!")
     if request.method == 'POST':
+        print('method post!')
         form = CreateNewEventForm(request.POST)
         if form.is_valid():
+            print('form is valid!')
             event.title = form.cleaned_data['title']
             event.comment = form.cleaned_data['comment']
             event.price = form.cleaned_data['price']
@@ -150,11 +154,13 @@ def update_event(request, id):
             time_of_the_event = form.cleaned_data['time_of_the_event']
             date_time = make_aware(datetime.datetime.combine(date_of_the_event, time_of_the_event))
             event.date_of_the_event = date_time
+            event.paid = form.cleaned_data['paid']
             event.save()
 
             messages.success(request, _("You have been updated the event!"))
 
             return redirect('events:events_list')
+        print('form is NOT valid!')
     current_timezone = get_current_timezone()
     datetimes = event.date_of_the_event.astimezone(current_timezone)
     date = datetimes.date()
@@ -163,6 +169,7 @@ def update_event(request, id):
             'time_of_the_event': times.strftime('%H:%M'),
             'price': event.price,
             'comment': event.comment,
-            'title': event.title}
+            'title': event.title,
+            'paid': event.paid}
     form = CreateNewEventForm(data)
     return render(request, 'events/create.html', {'form': form, 'id': event.id, 'action_flag': 'update'})

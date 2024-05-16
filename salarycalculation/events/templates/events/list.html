@@ -15,6 +15,7 @@
         {% endif %}
         {% for event in page_obj %}
             <div class="event-item" >
+
                 {% if event.in_future %}
 
                     <span style="color: green;">{% translate "Future event" %}</span>
@@ -43,6 +44,11 @@
                      </span>
                     {{ event.price }}<br>
                  </div>
+
+                <div class="event-paid">
+                    <input id='paid' type="checkbox"{% if event.paid %}checked{% endif %} onclick="return false;">
+                    <label for="paid">Paid</label>
+                </div>
 
                 <a href="{% url 'markers:markers_list'  %}?for_event={{ event.id }}&event_page={{ request.GET.page }}">{% translate "Add markers" %}</a>
 

@@ -14,4 +14,5 @@ class CreateNewEventForm(forms.Form):
     date_of_the_event = forms.DateField(label=_('date of the event'), input_formats=["%d.%m.%Y", "%Y-%m-%d"])
     time_of_the_event = forms.TimeField(label=_('time of the event'), input_formats=["%H:%M:%S", '%H:%M'])
     comment = forms.CharField(label=_('comment'), max_length=100, required=False)
+    paid = forms.BooleanField(label=_('paid'), required=False)
     price = forms.IntegerField(label=_('price'), min_value=0)

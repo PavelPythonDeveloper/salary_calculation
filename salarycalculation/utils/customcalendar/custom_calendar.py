@@ -1,6 +1,7 @@
+import datetime
+
 from django.utils import timezone
 import calendar
-
 
 January = 1
 
@@ -21,6 +22,10 @@ class CustomHTMLCal(calendar.LocaleHTMLCalendar):
     # CSS class for a day that has events
     cssclass_day_has_events = 'day-has-events'
 
+    cssclass_day_has_future_events = 'day-has-future-events'
+
+    cssclass_day_has_past_events = 'day-has-past-events'
+
     # CSS class for a day than doesn't have events
     cssclass_day_does_not_have_events = "day-does-not-have-events"
 
@@ -29,6 +34,10 @@ class CustomHTMLCal(calendar.LocaleHTMLCalendar):
 
     # CSS class for not today
     cssclass_not_today = "not-today"
+
+    cssclass_past_event = 'past-event'
+
+    cssclass_future_event = 'future-event'
 
     def formatday(self, day, weekday, theyear, themonth, events=None):
         """
@@ -40,17 +49,21 @@ class CustomHTMLCal(calendar.LocaleHTMLCalendar):
             # day outside month
             return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
         else:
+            paid = all([e.paid for e in events])
             today = theyear == timezone.now().year and themonth == timezone.now().month and day == timezone.now().day
-
-            return '<td class="%s"><a class="%s %s"  href="%s?year=%s&month=%s&day=%s">%d</a></td>' % (
+            thedate = datetime.date(year=theyear, month=themonth, day=day)
+            return '<td class="%s"><a class="%s %s"  href="%s?year=%s&month=%s&day=%s">%d%s</a></td>' % (
                 self.cssclasses[weekday],
                 (self.cssclass_not_today, self.cssclass_today)[today],
-                (self.cssclass_day_does_not_have_events, self.cssclass_day_has_events)[bool(events)],
+
+                (self.cssclass_day_does_not_have_events, (self.cssclass_day_has_future_events, self.cssclass_day_has_past_events)[thedate<timezone.now().date()])[bool(events)],
+
                 ('/events/create/', '/events/list/')[bool(events)],
                 theyear,
                 themonth,
                 day,
-                day)
+                day,
+                ('', '<span style="font-size: 13px; color: red;" class="material-symbols-outlined">attach_money</span>')[not paid])
 
     def formatweek(self, theweek, theyear, themonth, events=None):
         """

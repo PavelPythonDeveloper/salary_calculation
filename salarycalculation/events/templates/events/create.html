@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %}
-
+{% load static %}
 {% load i18n %}
 
 {% block title %}Create{% endblock %}
@@ -10,6 +10,10 @@
         <div class="form-wrapper">
             <form {% if action_flag %} action="{% url 'events:update' id=id %}" {% else %} action="{% url 'events:create' %}"{% endif %} method="post" novalidate>
                 {% csrf_token %}
+                {{ form.media }}
+                <input type="hidden" name="year" value="{{ request.GET.year }}">
+                        <input type="hidden" name="month" value="{{ request.GET.month }}">
+                        <input type="hidden" name="day" value="{{ request.GET.day }}">
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">
@@ -35,11 +39,12 @@
                         <div class="label">
                             {{ form.date_of_the_event.label }}
                         </div>
-
+<!--                    <span class="datetimeshortcuts">&nbsp;<a href="#">Сегодня</a>&nbsp;|&nbsp;<a href="#" id="calendarlink0"><span class="date-icon" title="Выберите дату">aaa</span></a></span>-->
                     </div>
                      <div class="field-error">
                         {{ form.title.errors }}
                     </div>
+
                     <div class="form-control-field">
                         {{ form.date_of_the_event }}
                     </div>
@@ -115,4 +120,8 @@
             </div>
         </div>
 </div>
+
+
 {% endblock %}
+
+

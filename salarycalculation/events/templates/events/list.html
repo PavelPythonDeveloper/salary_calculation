@@ -75,6 +75,9 @@
                     </button>
                 </form>
                     <form action="{% url 'events:update' event.id %}">
+                        <input type="hidden" name="year" value="{{ request.GET.year }}">
+                        <input type="hidden" name="month" value="{{ request.GET.month }}">
+                        <input type="hidden" name="day" value="{{ request.GET.day }}">
                     <button class="button submit">
                         <div class="button-inner">
                             <span class="material-symbols-outlined">

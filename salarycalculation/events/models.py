@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from markers.models import Marker
 from django.utils import timezone
-from django.utils.timezone import make_aware, is_aware, is_naive
 
 
 class Event(models.Model):
@@ -18,7 +17,10 @@ class Event(models.Model):
     markers = models.ManyToManyField(Marker)
 
     def in_future(self):
-        if timezone.localtime(self.date_of_the_event) >= timezone.localtime(timezone.now().replace(microsecond=0)) + (timezone.timedelta(1) - timezone.timedelta(hours=timezone.localtime(timezone.now()).hour, minutes=timezone.localtime(timezone.now()).minute, seconds=timezone.localtime(timezone.now()).second)):
+        if timezone.localtime(self.date_of_the_event) >= timezone.localtime(timezone.now().replace(microsecond=0)) + (
+                timezone.timedelta(1) - timezone.timedelta(hours=timezone.localtime(timezone.now()).hour,
+                                                           minutes=timezone.localtime(timezone.now()).minute,
+                                                           seconds=timezone.localtime(timezone.now()).second)):
             return True
         return False
 
@@ -28,11 +30,12 @@ class Event(models.Model):
         return False
 
     def today(self):
-        if timezone.localtime(timezone.now().replace(microsecond=0)) < timezone.localtime(self.date_of_the_event) < timezone.localtime(timezone.now().replace(microsecond=0)) + (timezone.timedelta(1) - timezone.timedelta(hours=timezone.localtime(timezone.now()).hour, minutes=timezone.localtime(timezone.now()).minute, seconds=timezone.localtime(timezone.now()).second, microseconds=0, milliseconds=0)):
-            print(timezone.localtime(timezone.now()) + (timezone.timedelta(1) - timezone.timedelta(hours=timezone.localtime(timezone.now()).hour, minutes=timezone.localtime(timezone.now()).minute, seconds=timezone.localtime(timezone.now()).second, milliseconds=0, microseconds=0)))
-            print('event-date', timezone.localtime(self.date_of_the_event))
-            print('now', timezone.localtime(timezone.now().replace(microsecond=0)))
-            print('timedelta1', timezone.timedelta(1))
+        if timezone.localtime(timezone.now().replace(microsecond=0)) < timezone.localtime(
+                self.date_of_the_event) < timezone.localtime(timezone.now().replace(microsecond=0)) + (
+                timezone.timedelta(1) - timezone.timedelta(hours=timezone.localtime(timezone.now()).hour,
+                                                           minutes=timezone.localtime(timezone.now()).minute,
+                                                           seconds=timezone.localtime(timezone.now()).second,
+                                                           microseconds=0, milliseconds=0)):
             return True
         return False
 

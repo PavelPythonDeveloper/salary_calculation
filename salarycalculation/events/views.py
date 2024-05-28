@@ -143,10 +143,8 @@ def update_event(request, id):
     if event.creator != request.user:
         return HttpResponse("You can't see it!")
     if request.method == 'POST':
-        print('method post!')
         form = CreateNewEventForm(request.POST)
         if form.is_valid():
-            print('form is valid!')
             event.title = form.cleaned_data['title']
             event.comment = form.cleaned_data['comment']
             event.price = form.cleaned_data['price']
@@ -158,9 +156,10 @@ def update_event(request, id):
             event.save()
 
             messages.success(request, _("You have been updated the event!"))
-
+            print('path', request.path)
+            # print('year', request.GET.year)
+            print('year', request.POST.get('year'))
             return redirect('events:events_list')
-        print('form is NOT valid!')
     current_timezone = get_current_timezone()
     datetimes = event.date_of_the_event.astimezone(current_timezone)
     date = datetimes.date()

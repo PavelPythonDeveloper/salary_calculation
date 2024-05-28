@@ -1,5 +1,20 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.contrib.admin.widgets import AdminDateWidget
+
+
+# class CustomAdminDateWidget(forms.DateInput):
+#     class Media:
+#         js = ("/admin/jsi18n/",
+#               "/static/admin/js/vendor/jquery/jquery.js",
+#               "/static/admin/js/calendar.js",
+#               "/static/admin/js/jquery.init.js",
+#               "/static/admin/js/admin/DateTimeShortcuts.js",
+#               "/static/admin/js/core.js")
+#
+#     def __init__(self, attrs=None, format=None):
+#         attrs = {'class': 'vDateField', 'size': '10', **(attrs or {})}
+#         super().__init__(attrs=attrs, format=format)
 
 
 class CalculateSumForm(forms.Form):
@@ -11,7 +26,8 @@ class CalculateSumForm(forms.Form):
 
 class CreateNewEventForm(forms.Form):
     title = forms.CharField(label=_('title'), max_length=50)
-    date_of_the_event = forms.DateField(label=_('date of the event'), input_formats=["%d.%m.%Y", "%Y-%m-%d"])
+    date_of_the_event = forms.DateField(widget=AdminDateWidget, label=_('date of the event'),
+                                        input_formats=["%d.%m.%Y", "%Y-%m-%d"])
     time_of_the_event = forms.TimeField(label=_('time of the event'), input_formats=["%H:%M:%S", '%H:%M'])
     comment = forms.CharField(label=_('comment'), max_length=100, required=False)
     paid = forms.BooleanField(label=_('paid'), required=False)

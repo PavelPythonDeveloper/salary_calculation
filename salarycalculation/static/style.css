@@ -619,8 +619,7 @@ html[data-theme="light"],
 
 
 
-
-
+// js calendar
 
 .calendarbox, .clockbox {
     margin: 5px auto;
@@ -834,9 +833,6 @@ select + .related-widget-wrapper-link,
 }
 
 
-
-
-
 .module {
     border: none;
     margin-bottom: 30px;
@@ -874,6 +870,7 @@ select + .related-widget-wrapper-link,
     border-collapse: collapse;
 }
 
-.calendarnav-next{
-    color: black;
+.calendarbox .today-calendar{
+    background-color: #76baff;
+    color: white;
 }

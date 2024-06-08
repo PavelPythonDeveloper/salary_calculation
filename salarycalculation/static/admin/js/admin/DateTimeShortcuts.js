@@ -284,8 +284,27 @@
             document.body.appendChild(cal_box);
             cal_box.addEventListener('click', function(e) { e.stopPropagation(); });
 
+
+            // next-prev year links
+            const cal_year_nav = quickElement('div', cal_box, '', 'class', 'year-change');
+            const cal_nav_year_prev = quickElement('a', cal_year_nav, '<', 'href', '#');
+            cal_nav_year_prev.className = '';
+            cal_nav_year_prev.addEventListener('click', function(e) {
+                e.preventDefault();
+                DateTimeShortcuts.drawPrevYear(num);
+            });
+
+
+            const cal_nav_year_next = quickElement('a', cal_year_nav, '>', 'href', '#');
+            cal_nav_year_next.className = '';
+            cal_nav_year_next.addEventListener('click', function(e) {
+                e.preventDefault();
+                DateTimeShortcuts.drawNextYear(num);
+            });
+
             // next-prev links
-            const cal_nav = quickElement('div', cal_box);
+            const cal_nav = quickElement('div', cal_box, '', 'class', 'month-change');
+            
             const cal_nav_prev = quickElement('a', cal_nav, '<', 'href', '#');
             cal_nav_prev.className = 'calendarnav-previous';
             cal_nav_prev.addEventListener('click', function(e) {
@@ -299,8 +318,6 @@
                 e.preventDefault();
                 DateTimeShortcuts.drawNext(num);
             });
-
-            
             // main box
             const cal_main = quickElement('div', cal_box, '', 'id', DateTimeShortcuts.calendarDivName2 + num);
             cal_main.className = 'calendar';
@@ -386,6 +403,12 @@
         },
         drawNext: function(num) {
             DateTimeShortcuts.calendars[num].drawNextMonth();
+        },
+        drawPrevYear: function(num) {
+            DateTimeShortcuts.calendars[num].drawPreviousYear();
+        },
+        drawNextYear: function(num) {
+            DateTimeShortcuts.calendars[num].drawNextYear();
         },
         handleCalendarCallback: function(num) {
             const format = get_format('DATE_INPUT_FORMATS')[0];

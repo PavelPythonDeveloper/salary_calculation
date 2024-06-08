@@ -93,7 +93,12 @@ depends on core.js for utility functions like removeChildren or quickElement
             const calDiv = document.getElementById(div_id);
             removeChildren(calDiv);
             const calTable = document.createElement('table');
-            quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1] + ' ' + year);
+
+            quickElement('caption', calTable, year, 'id', 'caption-year');
+            quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1], 'id', 'caption-month');
+
+//            quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1] + ' ' + year);
+
             const tableBody = quickElement('tbody', calTable);
 
             // Draw days-of-week header

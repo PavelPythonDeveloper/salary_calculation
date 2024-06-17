@@ -8,6 +8,7 @@
         <div class="form-wrapper">
             <form id="creation_form" action="{% url 'events:calculate' %}" method="post" novalidate>
                 {% csrf_token %}
+                {{ form.media }}
                 <div class="form-control">
                     <div class="form-control-label">
                         <span class="material-symbols-outlined">

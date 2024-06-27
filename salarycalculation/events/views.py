@@ -10,7 +10,7 @@ import datetime
 from utils.customcalendar import custom_calendar
 from django.utils.timezone import make_aware, get_current_timezone
 from django.utils import timezone
-from django.utils.translation import gettext as _ , get_language
+from django.utils.translation import gettext as _, get_language
 from django.utils.safestring import mark_safe
 
 
@@ -77,7 +77,8 @@ def calculate(request):
 
             start = datetime.datetime.combine(start_date, start_time)
             end = datetime.datetime.combine(end_date, end_time)
-            events = Event.objects.filter(creator=request.user).filter(date_of_the_event__gte=start).filter(date_of_the_event__lte=end)
+            events = Event.objects.filter(creator=request.user).filter(date_of_the_event__gte=start).filter(
+                date_of_the_event__lte=end)
             if events:
                 amount = 0
                 for event in events:
@@ -113,7 +114,7 @@ def create_new_event(request):
             event.save()
 
             messages.success(request, _("You have been created new event!"))
-            return redirect('events:events_list')
+            return redirect('events:events_calendar')
         return render(request, 'events/create.html', {'form': form})
     event_date = {}
     if request.GET.get('year', None) and request.GET.get('month', None) and request.GET.get('day', None):
@@ -159,7 +160,7 @@ def update_event(request, id):
             print('path', request.path)
             # print('year', request.GET.year)
             print('year', request.POST.get('year'))
-            return redirect('events:events_list')
+            return redirect('events:events_calendar')
     current_timezone = get_current_timezone()
     datetimes = event.date_of_the_event.astimezone(current_timezone)
     date = datetimes.date()

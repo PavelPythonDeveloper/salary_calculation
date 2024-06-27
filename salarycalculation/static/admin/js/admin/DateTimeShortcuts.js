@@ -14,7 +14,8 @@
                 [gettext_noop('Midnight'), 0],
                 [gettext_noop('6 a.m.'), 6],
                 [gettext_noop('Noon'), 12],
-                [gettext_noop('6 p.m.'), 18]
+                [gettext_noop('6 p.m.'), 18],
+                [gettext_noop('9:30 p.m.'), 9]
             ]
         },
         dismissClockFunc: [],
@@ -158,6 +159,79 @@
             quickElement('h2', clock_box, gettext('Choose a time'));
             const time_list = quickElement('ul', clock_box);
             time_list.className = 'timelist';
+
+            const time_increase  = quickElement('div', clock_box,'', 'class', 'time-increase');
+
+            const clock = quickElement('div', clock_box, '', 'class', 'clock');
+            clock.style.display = 'flex';
+            clock.style.justifyContent = 'center';
+
+            const time_decrease = quickElement('div', clock_box, '', 'class', 'time-decrease');
+            const clock_hour = quickElement('div', clock, '', 'class', 'clock-hour');
+
+            const colon = quickElement('span', clock, ':');
+            const clock_minute = quickElement('div', clock, '', 'class', 'clock-minute');
+            clock_hour.textContent = '00';
+            clock_minute.textContent =  '00';
+            const hour_increase_link  = quickElement('a', time_increase, '>');
+            hour_increase_link.href  =  '#';
+            hour_increase_link.style.margin = '7px';
+            let hour = 0;
+            hour_increase_link.addEventListener('click', function(e)  {
+                hour++;
+                if  (hour > 23)  {
+                    hour = 0;
+                };
+                console.log(hour);
+                clock_hour.textContent = hour;
+//                DateTimeShortcuts.handleClockRealTime(num, hour);
+            });
+
+            const minute_increase_link  = quickElement('a', time_increase, '>');
+            minute_increase_link.href   =   '#';
+            minute_increase_link.style.margin = '7px';
+            let minute = 0;
+            minute_increase_link.addEventListener('click', function(e)   {
+                minute++;
+                if  (minute >  59)   {
+                minute = 0;
+                 };
+                console.log(minute);
+                clock_minute.textContent = minute;
+//                DateTimeShortcuts.handleClockRealTime(num, minute);}
+            });
+
+            const hour_decrease_link = quickElement('a', time_decrease, '<');
+            hour_decrease_link.href  =  '#';
+            hour_decrease_link.style.margin  =  '7px';
+            hour_decrease_link.addEventListener('click', function(e)    {
+                hour--;
+                if  (hour < 0)  {
+                    hour = 23;
+                };
+                console.log(hour);
+                clock_hour.textContent = hour;
+//                DateTimeShortcuts.handleClockRealTime(num, hour);
+            });
+
+            const minute_decrease_link = quickElement('a', time_decrease, '<');
+            minute_decrease_link.href = '#';
+            minute_decrease_link.style.margin  =  '7px';
+            minute_decrease_link.addEventListener('click', function(e)   {
+            minute--;
+                if  (minute < 0)   {
+                    minute = 59;
+                };
+                console.log(minute);
+                clock_minute.textContent = minute;
+//                DateTimeShortcuts.handleClockRealTime(num, minute);
+            });
+
+            clock.addEventListener('click', function(e)  {
+                DateTimeShortcuts.handleClockRealTime(num, hour, minute);
+            });
+
+
             // The list of choices can be overridden in JavaScript like this:
             // DateTimeShortcuts.clockHours.name = [['3 a.m.', 3]];
             // where name is the name attribute of the <input>.
@@ -167,9 +241,9 @@
                 time_link.addEventListener('click', function(e) {
                     e.preventDefault();
                     DateTimeShortcuts.handleClockQuicklink(num, element[1]);
+                    console.log(element[1]);
                 });
             });
-
             const cancel_p = quickElement('p', clock_box);
             cancel_p.className = 'calendar-cancel';
             const cancel_link = quickElement('a', cancel_p, gettext('Cancel'), 'href', '#');
@@ -217,7 +291,16 @@
             }
             else {
                 d = new Date(1970, 1, 1, val, 0, 0, 0);
+                console.log(d);
             }
+            DateTimeShortcuts.clockInputs[num].value = d.strftime(get_format('TIME_INPUT_FORMATS')[0]);
+            DateTimeShortcuts.clockInputs[num].focus();
+            DateTimeShortcuts.dismissClock(num);
+        },
+
+        handleClockRealTime: function(num, hour, minute)  {
+            let d;
+            d = new Date(1970, 1, 1, hour, minute, 0, 0);
             DateTimeShortcuts.clockInputs[num].value = d.strftime(get_format('TIME_INPUT_FORMATS')[0]);
             DateTimeShortcuts.clockInputs[num].focus();
             DateTimeShortcuts.dismissClock(num);
@@ -284,11 +367,12 @@
             document.body.appendChild(cal_box);
             cal_box.addEventListener('click', function(e) { e.stopPropagation(); });
 
-
+            const year_month_nav = quickElement('div', cal_box, '', 'class', 'year-month-nav');
             // next-prev year links
-            const cal_year_nav = quickElement('div', cal_box, '', 'class', 'year-change');
+            const cal_year_nav = quickElement('div', year_month_nav, '', 'class', 'year-change');
+            cal_year_nav.id = 'year';
             const cal_nav_year_prev = quickElement('a', cal_year_nav, '<', 'href', '#');
-            cal_nav_year_prev.className = '';
+            cal_nav_year_prev.className = 'prev-year';
             cal_nav_year_prev.addEventListener('click', function(e) {
                 e.preventDefault();
                 DateTimeShortcuts.drawPrevYear(num);
@@ -296,28 +380,30 @@
 
 
             const cal_nav_year_next = quickElement('a', cal_year_nav, '>', 'href', '#');
-            cal_nav_year_next.className = '';
+            cal_nav_year_next.className = 'next-year';
             cal_nav_year_next.addEventListener('click', function(e) {
                 e.preventDefault();
                 DateTimeShortcuts.drawNextYear(num);
             });
 
             // next-prev links
-            const cal_nav = quickElement('div', cal_box, '', 'class', 'month-change');
-            
+            const cal_nav = quickElement('div', year_month_nav, '', 'class', 'month-change');
+            cal_nav.id = 'month';
             const cal_nav_prev = quickElement('a', cal_nav, '<', 'href', '#');
-            cal_nav_prev.className = 'calendarnav-previous';
+            cal_nav_prev.className = 'prev-month';
             cal_nav_prev.addEventListener('click', function(e) {
                 e.preventDefault();
                 DateTimeShortcuts.drawPrev(num);
             });
 
             const cal_nav_next = quickElement('a', cal_nav, '>', 'href', '#');
-            cal_nav_next.className = 'calendarnav-next';
+            cal_nav_next.className = 'next-month';
             cal_nav_next.addEventListener('click', function(e) {
                 e.preventDefault();
                 DateTimeShortcuts.drawNext(num);
             });
+
+
             // main box
             const cal_main = quickElement('div', cal_box, '', 'id', DateTimeShortcuts.calendarDivName2 + num);
             cal_main.className = 'calendar';

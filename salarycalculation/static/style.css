@@ -623,20 +623,51 @@ html[data-theme="light"],
 }
 
 .year-change{
-width: inherit;
+color: white;
+width: 100%;
   display: flex;
   justify-content: space-between;
   position: absolute;
 }
 
 .month-change{
-    background: none;
+color: white;
     margin: 15px 0;
-    right: 10px;
-    left: 10px;
-  width: inherit;
+
+  width: 100%;
   display: flex;
   justify-content: space-between;
   position: absolute;
 }
 
+.today-calendar{
+    background-color: blue;
+}
+#caption-year{
+background: var(--primary);
+color: white;
+}
+#caption-month{
+background: var(--primary);
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.clockbox h2{
+    background-color: blue;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    text-align: left;
+    background: var(--primary);
+    color: var(--header-link-color);
+}
+
+.year-month-nav{
+    background-color: var(--primary);
+}

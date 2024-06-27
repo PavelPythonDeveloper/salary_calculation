@@ -93,12 +93,15 @@ depends on core.js for utility functions like removeChildren or quickElement
             const calDiv = document.getElementById(div_id);
             removeChildren(calDiv);
             const calTable = document.createElement('table');
-
-            quickElement('caption', calTable, year, 'id', 'caption-year');
-            quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1], 'id', 'caption-month');
-
+            const captionBlock = document.createElement('div');
+            quickElement('div', captionBlock, year, 'id', 'caption-year');
+            quickElement('div', captionBlock, CalendarNamespace.monthsOfYear[month - 1], 'id', 'caption-month');
+            calDiv.appendChild(captionBlock);
 //            quickElement('caption', calTable, CalendarNamespace.monthsOfYear[month - 1] + ' ' + year);
-
+//            var source = document.getElementById('caption-year');
+//            var destination = document.getElementById('year');
+//            console.log(source);
+//            console.log(destination);
             const tableBody = quickElement('tbody', calTable);
 
             // Draw days-of-week header
@@ -174,6 +177,7 @@ depends on core.js for utility functions like removeChildren or quickElement
             }
 
             calDiv.appendChild(calTable);
+
         }
     };
 

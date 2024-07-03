@@ -175,7 +175,7 @@
             clock_minute.textContent =  '00';
             const hour_increase_link  = quickElement('a', time_increase, '>');
             hour_increase_link.href  =  '#';
-            hour_increase_link.style.margin = '7px';
+            hour_increase_link.style.margin = '20px';
             let hour = 0;
             hour_increase_link.addEventListener('click', function(e)  {
                 hour++;
@@ -189,7 +189,7 @@
 
             const minute_increase_link  = quickElement('a', time_increase, '>');
             minute_increase_link.href   =   '#';
-            minute_increase_link.style.margin = '7px';
+            minute_increase_link.style.margin = '20px';
             let minute = 0;
             minute_increase_link.addEventListener('click', function(e)   {
                 minute++;
@@ -203,7 +203,7 @@
 
             const hour_decrease_link = quickElement('a', time_decrease, '<');
             hour_decrease_link.href  =  '#';
-            hour_decrease_link.style.margin  =  '7px';
+            hour_decrease_link.style.margin  =  '20px';
             hour_decrease_link.addEventListener('click', function(e)    {
                 hour--;
                 if  (hour < 0)  {
@@ -216,7 +216,7 @@
 
             const minute_decrease_link = quickElement('a', time_decrease, '<');
             minute_decrease_link.href = '#';
-            minute_decrease_link.style.margin  =  '7px';
+            minute_decrease_link.style.margin  =  '20px';
             minute_decrease_link.addEventListener('click', function(e)   {
             minute--;
                 if  (minute < 0)   {

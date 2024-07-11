@@ -1,0 +1,9 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <form action="{% url 'presets:create_preset' %}" method="post" novalidate>
+        {% csrf_token %}
+        {{ form.markers }}
+        <button type="submit" >Create</button>
+    </form>
+{% endblock %}

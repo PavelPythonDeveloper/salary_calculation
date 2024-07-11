@@ -26,6 +26,7 @@ urlpatterns = [
     path("events/", include("events.urls")),
     path("marker/", include("markers.urls")),
     path('', include('home.urls')),
+    path('presets/', include("presets.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catlog'),
 ]

@@ -20,9 +20,9 @@ from widgets import CustomDatePickerWidget
 
 class CalculateSumForm(forms.Form):
     start_date = forms.DateField(widget=AdminDateWidget, label=_('start date'), input_formats=["%d.%m.%Y"])
-    start_time = forms.TimeField(widget=AdminTimeWidget, label=_('start time'), input_formats=["%H:%M:%S"])
+    start_time = forms.TimeField(widget=AdminTimeWidget, label=_('start time'), input_formats=["%H:%M:%S", "%H:%M"])
     end_date = forms.DateField(widget=AdminDateWidget, label=_('end date'), input_formats=["%d.%m.%Y"])
-    end_time = forms.TimeField(widget=AdminTimeWidget, label=_('end time'), input_formats=["%H:%M:%S"])
+    end_time = forms.TimeField(widget=AdminTimeWidget, label=_('end time'), input_formats=["%H:%M:%S", "%H:%M"])
 
 
 class CreateNewEventForm(forms.Form):

@@ -30,6 +30,6 @@ def create_preset(request):
             return HttpResponse(status=200)
     # markers = request.user.markers.all()
     # print('markers', markers)
-    form = CreateNewPresetForm()
+    form = CreateNewPresetForm(user=request.user)
     context.update(form=form)
     return render(request, 'create_preset.html', context)
